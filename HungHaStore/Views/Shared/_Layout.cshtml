@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    string _active = "";
+    string _controller = ViewContext.RouteData.Values["controller"].ToString();
+    string _action = ViewContext.RouteData.Values["action"].ToString();
+    string currentAction = ViewContext.RouteData.Values["controller"].ToString() + "/" + ViewContext.RouteData.Values["action"].ToString();
+    string _class_hero_normal = "";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,7 +37,7 @@
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
                             <div class="header__top__right__language">
-                                <img src="~/Assest/img/language.png" alt="">
+                                <img src="~/Assest//Assest/img/language.png" alt="">
                                 <div>English</div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
@@ -50,23 +57,23 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="~/Assest/img/logo.png" alt=""></a>
+                        <a href="./index.html"><img src="~/Assest//Assest/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="@Url.Action("Index","Home")">TRANG CHỦ</a></li>
-                            <li><a href="@Url.Action("Index","Product")">SẢN PHẨM</a></li>
-                            <li><a href="@Url.Action("Index","About")">GIỚI THIỆU</a></li>
-                            <li><a href="./contact.html">LIÊN HỆ</a></li>
+                            <li class="@{_active = currentAction == "Home/Index" ? "active" : ""; @_active}"><a href="@Url.Action("Index", "Home")">TRANG CHỦ</a></li>
+                            <li class="@{_active = _controller == "Product" ? "active" : ""; @_active}"><a href="@Url.Action("Index", "Product")">SẢN PHẨM</a></li>
+                            <li class="@{_active = currentAction == "Home/About" ? "active" : ""; @_active}"><a href="@Url.Action("About", "Home")">GIỚI THIỆU</a></li>
+                            <li class="@{_active = currentAction == "Home/Contact" ? "active" : ""; @_active}"><a href="@Url.Action("Contact", "Home")">LIÊN HỆ</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="@Url.Action("Index", "Cart")"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
                         </ul>
                         <div class="header__cart__price"><span>150.000 đ</span></div>
                     </div>
@@ -77,7 +84,7 @@
             </div>
         </div>
     </header>
-    <section class="hero hero-normal">
+    <section class="hero @{_class_hero_normal = currentAction == "Home/Index" ? "hero-nomal" : "";@_class_hero_normal}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
@@ -86,7 +93,7 @@
                             <i class="fa fa-bars"></i>
                             <span>Danh mục</span>
                         </div>
-                        <ul>
+                        <ul style="@{string display = currentAction != "Home/Index"?"display:none":""; @display}">
                             <li><a href="#">Giường</a></li>
                             <li><a href="#">Tủ quần áo</a></li>
                             <li><a href="#">Bàn làm việc</a></li>
@@ -112,6 +119,11 @@
                             </div>
                         </div>
                     </div>
+                    @if (currentAction == "Home/Index")
+                    {
+                    <div class="hero__item set-bg" data-setbg="/Assest/img/hero/banner.jpg" style="background-image: url(&quot;/Assest/img/hero/banner.jpg&quot;);">
+                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -124,7 +136,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="~/Assest/img/logo.png" alt=""></a>
+                            <a href="./index.html"><img src="~/Assest//Assest/img/logo.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Địa chỉ: 96 Định Công - Thanh Xuân - Hà Nội</li>

@@ -13,5 +13,10 @@ namespace HungHaStore.Controllers
         {
             return View();
         }
+
+        public ActionResult Detail()
+        {
+            return View();
+        }
     }
 }
