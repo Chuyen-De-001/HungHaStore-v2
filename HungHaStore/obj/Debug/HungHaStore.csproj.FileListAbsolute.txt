@@ -156,3 +156,7 @@ D:\source\HungHaStore-v2\HungHaStore\obj\Debug\HungHaStore.csproj.CoreCompileInp
 D:\source\HungHaStore-v2\HungHaStore\obj\Debug\HungHaStore.csproj.CopyComplete
 D:\source\HungHaStore-v2\HungHaStore\obj\Debug\HungHaStore.dll
 D:\source\HungHaStore-v2\HungHaStore\obj\Debug\HungHaStore.pdb
+D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.dll
+D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.SqlServer.dll
+D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.xml
+D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.SqlServer.xml

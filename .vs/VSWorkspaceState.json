@@ -4,8 +4,9 @@
     "\\HungHaStore",
     "\\HungHaStore\\Controllers",
     "\\HungHaStore\\Views",
+    "\\HungHaStore\\Views\\Cart",
     "\\HungHaStore\\Views\\Shared"
   ],
-  "SelectedNode": "\\HungHaStore\\Views\\Shared\\_Layout.cshtml",
+  "SelectedNode": "\\HungHaStore\\Views\\Cart\\Index.cshtml",
   "PreviewInSolutionExplorer": false
 }

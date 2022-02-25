@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="wrap d-md-flex" style="box-shadow: 0 10px 34px -15px rgb(0 0 0 / 24%); ">
+                <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last col" style="background: #7dd352;">
+                    <div class="text w-100">
+                        <h2>Chào mừng đến với đồ gỗ Hưng Hà</h2>
+                        <p>Bạn đã có tài khoản?</p>
+                        <a href="@Url.Action("Login", "Security")" class="btn btn-outline-light">Đăng nhập</a>
+                    </div>
+                </div>
+                <div class="login-wrap p-4 p-lg-5 col">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h3 class="mb-4">Đăng kí</h3>
+                        </div>
+                    </div>
+                    <form action="#" class="signin-form">
+                        <div class="form-group mb-3">
+                            <label class="label" for="name">Tài khoản</label>
+                            <input type="text" class="form-control" placeholder="Tài khoản" required="">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" for="password">Mật khẩu</label>
+                            <input type="password" class="form-control" placeholder="Mật khẩu" required="">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" for="password">Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control" placeholder="Mật khẩu" required="">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Đăng kí</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

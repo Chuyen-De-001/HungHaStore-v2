@@ -1,5 +1,11 @@
-﻿@{ 
+﻿@using HungHaStore.Models;
+@{ 
     ViewBag.Title = "Trang chủ";
+    List<san_pham> sanPhamNoiBat = ViewBag.sanPhamNoiBat; //nhận dữ liệu của sản phẩm từ controller.
+    List<loai_sp> loaiSanPham = ViewBag.loaiSanPham; //nhận dữ liệu của loại sản phẩm từ controller.
+    List<san_pham> sanPhamMoiNhat = ViewBag.sanPhamMoiNhat;
+    List<san_pham> sanPhamXemNhieu = ViewBag.sanPhamXemNhieu;
+    List<san_pham> sanPhamGiamGia = ViewBag.sanPhamGiamGia;
 }
 <section class="featured spad">
     <div class="container">
@@ -8,138 +14,26 @@
                 <div class="section-title">
                     <h2>Nổi bật</h2>
                 </div>
-                <div class="featured__controls">
-                    <ul>
-                        <li class="active" data-filter="*">All</li>
-                        <li data-filter=".oranges">Giường</li>
-                        <li data-filter=".fresh-meat">Tủ quần áo</li>
-                        <li data-filter=".vegetables">Bàn làm việc</li>
-                        <li data-filter=".fastfood">Bàn trang điểm</li>
-                    </ul>
-                </div>
             </div>
         </div>
         <div class="row featured__filter" id="MixItUp866079">
-            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
+            @foreach (san_pham sanPham in sanPhamNoiBat)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mix @sanPham.loai_sp.ten">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/@sanPham.hinh_anh">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="@Url.Action("Detail", "Product")">@sanPham.ten</a></h6>
+                            <h5>@sanPham.gia_tien</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" style="background-image: url(&quot;Assest/img/featured/feature-1.jpg&quot;);">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="#">Bàn ăn bằng gỗ chất lương cao SHS 41081</a></h6>
-                        <h5>1.500.000 đ</h5>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -168,38 +62,40 @@
                     <div class="latest-product__slider owl-carousel owl-loaded owl-drag">
                         <div class="owl-stage-outer">
                             <div class="owl-stage" style="transform: translate3d(-990px, 0px, 0px); transition: all 1.2s ease 0s; width: 1980px;">
-                                <div class="owl-item active" style="width: 330px;">
+                                <div class="owl-item cloned active" style="width: 330px;">
                                     <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
+                                        @for (int i = 0; i < 3; i++)
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/Assest/img/product/@sanPhamMoiNhat[i].hinh_anh" alt="@sanPhamMoiNhat[i].hinh_anh">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@sanPhamMoiNhat[i].ten</h6>
+                                                    <span>@sanPhamMoiNhat[i].gia_tien</span>
+                                                </div>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 360px;">
+                                    <div class="latest-prdouct__slider__item">
+                                        @for (int i = 3; i < 6; i++)
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/Assest/img/product/@sanPhamMoiNhat[i].hinh_anh" alt="@sanPhamMoiNhat[i].hinh_anh">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@sanPhamMoiNhat[i].ten</h6>
+                                                    <span>@sanPhamMoiNhat[i].gia_tien</span>
+                                                </div>
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </div>
+
                         </div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span class="fa fa-angle-left"><span></span></span></button><button type="button" role="presentation" class="owl-next"><span class="fa fa-angle-right"><span></span></span></button></div><div class="owl-dots disabled"></div>
                     </div>
                 </div>
@@ -210,35 +106,36 @@
                     <div class="latest-product__slider owl-carousel owl-loaded owl-drag">
                         <div class="owl-stage-outer">
                             <div class="owl-stage" style="transform: translate3d(-990px, 0px, 0px); transition: all 1.2s ease 0s; width: 1980px;">
-                                <div class="owl-item active" style="width: 330px;">
+                                <div class="owl-item cloned active" style="width: 330px;">
                                     <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
+                                        @for (int i = 0; i < 3; i++)
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/Assest/img/product/@sanPhamXemNhieu[i].hinh_anh" alt="@sanPhamXemNhieu[i].hinh_anh">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@sanPhamXemNhieu[i].ten</h6>
+                                                    <span>@sanPhamXemNhieu[i].gia_tien</span>
+                                                </div>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 360px;">
+                                    <div class="latest-prdouct__slider__item">
+                                        @for (int i = 3; i < 6; i++)
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/Assest/img/product/@sanPhamXemNhieu[i].hinh_anh" alt="@sanPhamXemNhieu[i].hinh_anh">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@sanPhamXemNhieu[i].ten</h6>
+                                                    <span>@sanPhamXemNhieu[i].gia_tien</span>
+                                                </div>
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -252,35 +149,36 @@
                     <div class="latest-product__slider owl-carousel owl-loaded owl-drag">
                         <div class="owl-stage-outer">
                             <div class="owl-stage" style="transform: translate3d(-990px, 0px, 0px); transition: all 1.2s ease 0s; width: 1980px;">
-                                <div class="owl-item active" style="width: 330px;">
+                                <div class="owl-item cloned active" style="width: 330px;">
                                     <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="/Assest/img/product/Ban-an-bang-go-chat-luong-cao-GHS-41081-ava-300x300.png" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Bàn ăn bằng gỗ chất lương cao SHS 41081</h6>
-                                                <span>1.500.000 đ</span>
-                                            </div>
-                                        </a>
+                                        @for (int i = 0; i < 3; i++)
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/Assest/img/product/@sanPhamGiamGia[i].hinh_anh" alt="@sanPhamGiamGia[i].hinh_anh">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@sanPhamGiamGia[i].ten</h6>
+                                                    <span>@sanPhamGiamGia[i].gia_tien</span>
+                                                </div>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="owl-item cloned" style="width: 360px;">
+                                    <div class="latest-prdouct__slider__item">
+                                        @for (int i = 3; i < 6; i++)
+                                        {
+                                            <a href="#" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/Assest/img/product/@sanPhamGiamGia[i].hinh_anh" alt="@sanPhamGiamGia[i].hinh_anh">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@sanPhamGiamGia[i].ten</h6>
+                                                    <span>@sanPhamGiamGia[i].gia_tien</span>
+                                                </div>
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </div>
