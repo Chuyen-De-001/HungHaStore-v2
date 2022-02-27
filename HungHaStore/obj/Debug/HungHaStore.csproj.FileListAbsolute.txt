@@ -160,3 +160,7 @@ D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.dll
 D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.SqlServer.dll
 D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.xml
 D:\source\HungHaStore-v2\HungHaStore\bin\EntityFramework.SqlServer.xml
+E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.dll
+E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.SqlServer.dll
+E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.xml
+E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.SqlServer.xml
