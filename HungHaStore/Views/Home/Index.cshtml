@@ -1,5 +1,6 @@
 ﻿@using HungHaStore.Models;
 @{ 
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     ViewBag.Title = "Trang chủ";
     List<san_pham> sanPhamNoiBat = ViewBag.sanPhamNoiBat; //nhận dữ liệu của sản phẩm từ controller.
     List<loai_sp> loaiSanPham = ViewBag.loaiSanPham; //nhận dữ liệu của loại sản phẩm từ controller.
@@ -29,7 +30,7 @@
                         </div>
                         <div class="featured__item__text">
                             <h6><a href="@Url.Action("Detail", "Product")">@sanPham.ten</a></h6>
-                            <h5>@sanPham.gia_tien</h5>
+                            <h5>@String.Format(currency, "{0:c0}", sanPham.gia_tien)</h5>
                         </div>
                     </div>
                 </div>
@@ -72,7 +73,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>@sanPhamMoiNhat[i].ten</h6>
-                                                    <span>@sanPhamMoiNhat[i].gia_tien</span>
+                                                    <span>@String.Format(currency, "{0:c0}", sanPhamMoiNhat[i].gia_tien)</span>
                                                 </div>
                                             </a>
                                         }
@@ -88,7 +89,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>@sanPhamMoiNhat[i].ten</h6>
-                                                    <span>@sanPhamMoiNhat[i].gia_tien</span>
+                                                    <span>@String.Format(currency, "{0:c0}", sanPhamMoiNhat[i].gia_tien)</span>
                                                 </div>
                                             </a>
                                         }
@@ -116,7 +117,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>@sanPhamXemNhieu[i].ten</h6>
-                                                    <span>@sanPhamXemNhieu[i].gia_tien</span>
+                                                    <span>@String.Format(currency, "{0:c0}", sanPhamXemNhieu[i].gia_tien)</span>
                                                 </div>
                                             </a>
                                         }
@@ -132,7 +133,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>@sanPhamXemNhieu[i].ten</h6>
-                                                    <span>@sanPhamXemNhieu[i].gia_tien</span>
+                                                    <span>@String.Format(currency, "{0:c0}", sanPhamXemNhieu[i].gia_tien)</span>
                                                 </div>
                                             </a>
                                         }
@@ -159,7 +160,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>@sanPhamGiamGia[i].ten</h6>
-                                                    <span>@sanPhamGiamGia[i].gia_tien</span>
+                                                    <span>@String.Format(currency, "{0:c0}", sanPhamGiamGia[i].gia_tien)</span>
                                                 </div>
                                             </a>
                                         }
@@ -175,7 +176,7 @@
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6>@sanPhamGiamGia[i].ten</h6>
-                                                    <span>@sanPhamGiamGia[i].gia_tien</span>
+                                                    <span>@String.Format(currency, "{0:c0}", sanPhamGiamGia[i].gia_tien)</span>
                                                 </div>
                                             </a>
                                         }

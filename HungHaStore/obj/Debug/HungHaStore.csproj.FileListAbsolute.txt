@@ -164,3 +164,7 @@ E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.dll
 E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.SqlServer.dll
 E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.xml
 E:\souce\HungHaStore\HungHaStore\bin\EntityFramework.SqlServer.xml
+D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.dll
+D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.Mvc.dll
+D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.xml
+D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.Mvc.xml

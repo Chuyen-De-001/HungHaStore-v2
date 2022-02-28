@@ -30,7 +30,8 @@ namespace HungHaStore
                       "~/Content/jquery-ui.min.css",
                       "~/Content/owl.carousel.min.css",
                       "~/Content/slicknav.min.css",
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/custom.css"));
 
         }
     }
