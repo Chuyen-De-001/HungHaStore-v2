@@ -168,3 +168,7 @@ D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.dll
 D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.Mvc.dll
 D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.xml
 D:\source\HungHaStore-v2\HungHaStore\bin\PagedList.Mvc.xml
+E:\souce\HungHaStore\HungHaStore\bin\PagedList.dll
+E:\souce\HungHaStore\HungHaStore\bin\PagedList.Mvc.dll
+E:\souce\HungHaStore\HungHaStore\bin\PagedList.xml
+E:\souce\HungHaStore\HungHaStore\bin\PagedList.Mvc.xml

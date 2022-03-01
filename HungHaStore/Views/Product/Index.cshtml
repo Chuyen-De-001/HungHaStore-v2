@@ -14,10 +14,7 @@
         danh_muc = Request.QueryString["danh_muc_sp"].Split(',');
     }
 
-    if (Request.QueryString["price"] != null)
-    {
-        price = Request.QueryString["price"];
-    }
+    price = Request.QueryString["price"];
 }
 <section class="breadcrumb-section set-bg" data-setbg="/Assest/img/breadcrumb.jpg" style="background-image: url(&quot;img/breadcrumb.jpg&quot;);">
     <div class="container">
@@ -34,7 +31,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-5">
-                <form method="get" action="@Url.Action("Index", "Product")">
+                <form method="get" action="@Url.Action("Index", "Product")" multiple>
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <h4>Danh mục</h4>
@@ -42,29 +39,30 @@
                                 @foreach (loai_sp item in loaiSanPham)
                                 {
                                     <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem"><input type="checkbox" class="font-weight-bold font-italic" name="danh_muc_sp" value="@item.id" id="danh_muc_@item.id" @{check = Array.IndexOf(danh_muc, item.id.ToString()) > -1 ? "checked" : "";@check}/><label for="danh_muc_@item.id">&nbsp;@item.ten</label></li>
-                                        }
+                                }
+                            <input type="hidden" name="search" value="@search" />
                             </ul>
                         </div>
                         <div class="sidebar__item">
                             <h4>Giá</h4>
                             <ul>
-                                <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem"><input type="radio" name="price" value="500" id="price_500" @{check = price == "500" ? "checked" : "";@check}/>
+                                <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem"><input type="radio" name="price" value="0:500000" id="price_500" @{check = price == "0:500000" ? "checked" : "";@check}/>
                                 <label for="price_500">&nbsp;DƯỚI 500.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="500:1000" id="price_500_1000" @{check = price == "500:1000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="500000:1000000" id="price_500_1000" @{check = price == "500000:1000000" ? "checked" : "";@check}/>
                                     <label for="price_500_1000">&nbsp;500.000đ - 1.000.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="1000:1500" id="price_1000_1500" @{check = price == "1000:1500" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="1000000:1500000" id="price_1000_1500" @{check = price == "1000000:1500000" ? "checked" : "";@check}/>
                                     <label for="price_1000_1500">&nbsp;1.000.000đ - 1.500.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="1500:2000" id="price_1500_2000" @{check = price == "1500:2000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="1500000:2000000" id="price_1500_2000" @{check = price == "1500000:2000000" ? "checked" : "";@check}/>
                                     <label for="price_1500_2000">&nbsp;1.500.000đ - 2.000.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="2000" id="price_2000" @{check = price == "2000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="2000000" id="price_2000" @{check = price == "2000000" ? "checked" : "";@check}/>
                                     <label for="price_2000">&nbsp;TRÊN 2.000.000đ</label>
                                 </li>
                             </ul>
@@ -86,10 +84,11 @@
                         {
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="/Assest/img/product/@item.hinh_anh">
+                                    <div class="product__item__pic set-bg" data-id="@item.id">
+                                        <img src="/Assest/img/product/@item.hinh_anh" alt="@item.ten" />
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="javascript:void(0)" class="add-to-cart"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
@@ -104,7 +103,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="pagination justify-content-md-center">
-                            @Html.PagedListPager(Model, page => Url.Action("Index", "Product", new { page, search, pageSize = ViewBag.PageSize }))
+                            @Html.PagedListPager(Model, page => Url.Action("Index", "Product", new { page, search, pageSize = ViewBag.PageSize,price = Request.QueryString["price"], danh_muc_sp = Request.QueryString["danh_muc_sp"] }))
                         </div>
                     </div>
                 </div>

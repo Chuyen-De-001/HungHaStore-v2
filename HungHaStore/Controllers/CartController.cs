@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HungHaStore.Helper;
 
 namespace HungHaStore.Controllers
 {
@@ -11,7 +12,8 @@ namespace HungHaStore.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            return View();
+            List<Cart> list = CartHelper.getList();
+            return View(list);
         }
     }
 }

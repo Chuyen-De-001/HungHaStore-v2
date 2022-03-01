@@ -135,6 +135,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CartHelper.cs" />
     <Compile Include="Models\chitiet_hd.cs" />
     <Compile Include="Models\hoa_don.cs" />
     <Compile Include="Models\loai_sp.cs" />
@@ -820,6 +822,7 @@
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Security\Login.cshtml" />
     <Content Include="Views\Security\Register.cshtml" />
+    <Content Include="Views\Ajax\Add.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,6 +1,8 @@
 ﻿@using HungHaStore.Models;
+@using HungHaStore.Helper;
 @{ 
     Model1 db = new Model1();
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     IEnumerable<loai_sp> loaiSanPham = db.loai_sp.ToList();
     string _active = "";
     string _controller = ViewContext.RouteData.Values["controller"].ToString();
@@ -78,9 +80,9 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="@Url.Action("Index", "Cart")"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="@Url.Action("Index", "Cart")" id="shopping-cart"><i class="fa fa-shopping-bag"></i> <span id="count_cart">@CartHelper.getList().Count()</span></a></li>
                         </ul>
-                        <div class="header__cart__price"><span>150.000 đ</span></div>
+                        <div class="header__cart__price"><span id="sum_money">@String.Format(currency, "{0:c0}", CartHelper.sumMoney())</span></div>
                     </div>
                 </div>
             </div>
@@ -111,6 +113,8 @@
                         <div class="hero__search__form">
                             <form action="@Url.Action("Index","Product")" method="GET">
                                 <input type="text" name="search" placeholder="Bạn muốn tìm gì?" value="@search">
+                                <input type="hidden" name="price" value="@Request.QueryString["price"]" />
+                                <input type="hidden" name="danh_muc_sp" value="@Request.QueryString["danh_muc_sp"]" />
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
                         </div>
@@ -126,8 +130,7 @@
                     </div>
                     @if (currentAction == "Home/Index")
                     {
-                    <div class="hero__item set-bg" data-setbg="/Assest/img/hero/banner.jpg" style="background-position: unset;">
-                    </div>
+                        <div class="hero__item set-bg" data-setbg="/Assest/img/hero/banner.jpg" style="background-position: unset;"></div>
                     }
                 </div>
             </div>
@@ -176,5 +179,65 @@
         </div>
     </footer>
     @Scripts.Render("~/bundles/custom ")
+<script>
+        $('.add-to-cart').on('click', function () {
+            var cart = $('#shopping-cart');
+            var imgtodrag = $(this).closest('.featured__item__pic').find('img').eq(0);
+            if (imgtodrag.length == 0) {
+                var imgtodrag = $(this).closest('.product__item__pic').find('img').eq(0);
+            }
+            if (imgtodrag) {
+                var imgclone = imgtodrag.clone()
+                    .offset({
+                        top: imgtodrag.offset().top,
+                        left: imgtodrag.offset().left
+                    })
+                    .css({
+                        'opacity': '0.8',
+                        'position': 'absolute',
+                        'height': '150px',
+                        'width': '150px',
+                        'z-index': '100'
+                    })
+                    .appendTo($('body'))
+                    .animate({
+                        'top': cart.offset().top + 10,
+                        'left': cart.offset().left + 10,
+                        'width': 75,
+                        'height': 75
+                    }, 1000, 'easeInOutExpo');
+
+                setTimeout(function () {
+                    cart.effect("shake", {
+                        times: 2
+                    }, 500);
+                }, 1500);
+                imgclone.animate({
+                    'width': 0,
+                    'height': 0
+                }, function () {
+                    $(this).detach()
+                });
+            }
+            var id = $(this).closest(".featured__item__pic").attr("data-id");
+            if (id == undefined) {
+                id = $(this).closest(".product__item__pic").attr("data-id");
+            }
+            console.log(id);
+            var url = "@Url.Action("Add", "Ajax")";
+            $.ajax({
+                url: url,
+                type: "get",
+                data: {
+                    id:id
+                },
+                dataType:'json',
+                success: function (response) {
+                    $("#count_cart").html(response.count);
+                    $("#sum_money").html(response.sumMoney);
+                }
+            });
+        });
+</script>
 </body>
 </html>
