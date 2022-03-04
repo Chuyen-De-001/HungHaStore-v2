@@ -103,7 +103,7 @@
                         <ul style="@{string display = currentAction != "Home/Index"?"display:none":""; @display}">
                             @foreach (loai_sp item in loaiSanPham)
                             {
-                                <li><a href="#">@item.ten</a></li>
+                                <li><a href="@Url.Action("Index","Product",new {danh_muc_sp= item.id})">@item.ten</a></li>
                             }
                         </ul>
                     </div>
@@ -223,7 +223,6 @@
             if (id == undefined) {
                 id = $(this).closest(".product__item__pic").attr("data-id");
             }
-            console.log(id);
             var url = "@Url.Action("Add", "Ajax")";
             $.ajax({
                 url: url,

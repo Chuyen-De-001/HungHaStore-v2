@@ -13,11 +13,11 @@ namespace HungHaStore.Controllers
         public ActionResult Index()
         {
             // lấy dữ liệu từ database
-            var loaiSanPham = db.loai_sp.ToList(); 
-            var sanPhamNoiBat = db.san_pham.Take(16).ToList(); 
-            var sanPhamMoiNhat = db.san_pham.OrderByDescending(s => s.tg_tao).Take(6).ToList();
-            var sanPhamXemNhieu = db.san_pham.OrderByDescending(s=>s.luot_xem).Take(6).ToList();
-            var sanPhamGiamGia = db.san_pham.OrderByDescending(s => s.giam_gia).Take(6).ToList();
+            var loaiSanPham = db.loai_sp.SqlQuery("select * from loai_sp").ToList(); 
+            var sanPhamNoiBat = db.san_pham.SqlQuery("select TOP 16 * from san_pham ").ToList(); 
+            var sanPhamMoiNhat = db.san_pham.SqlQuery("select TOP 6 * from san_pham order by tg_tao desc").ToList();
+            var sanPhamXemNhieu = db.san_pham.SqlQuery("select TOP 6 * from san_pham order by luot_xem desc").ToList();
+            var sanPhamGiamGia = db.san_pham.SqlQuery("select TOP 6 * from san_pham order by giam_gia desc").ToList();
             //----------------------------------
 
 

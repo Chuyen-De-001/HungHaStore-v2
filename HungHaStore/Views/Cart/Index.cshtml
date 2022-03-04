@@ -34,7 +34,7 @@
                             {
                                 foreach (Cart item in Model)
                                 {
-                                    <tr>
+                                    <tr data-id="@item.id_san_pham">
                                         <td class="shoping__cart__item">
                                             <img src="/Assest/img/product/@item.hinh_anh" alt="@item.ten" height="100px" width="auto">
                                             <h5>@item.ten</h5>
@@ -43,11 +43,7 @@
                                             @String.Format(currency, "{0:c0}", item.gia_tien)
                                         </td>
                                         <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
+                                            <span class="font-weight-bold text-dark">@item.so_luong</span>
                                         </td>
                                         <td class="shoping__cart__total">
                                             @String.Format(currency, "{0:c0}", item.gia_tien)
@@ -93,3 +89,26 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).on("click", ".shoping__cart__table .icon_close", function () {
+        var tr = $(this).closest("tr");
+        var id = tr.attr("data-id");
+        var url = "@Url.Action("Remove", "Ajax")";
+        $.ajax({
+            url: url,
+            type: "get",
+            data: {
+                id:id
+            },
+            dataType:'json',
+            success: function (response) {
+                console.log(response);
+                if (response == true) {
+                    location.reload();
+                } else{
+                    alert("Xảy ra lỗi.");
+                }
+            }
+        });
+    })
+</script>

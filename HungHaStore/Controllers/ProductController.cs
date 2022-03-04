@@ -16,35 +16,40 @@ namespace HungHaStore.Controllers
         public ActionResult Index(int page = 1, string search = "", int pageSize = 15, string price = "")
         {
             string danh_muc_sp = Request.QueryString["danh_muc_sp"];
+            string query = "select * from san_pham where 1=1";
             IEnumerable<san_pham> model;
             IEnumerable<loai_sp> loaiSanPham;
             loaiSanPham = db.loai_sp.ToList();
             model = (IEnumerable<san_pham>)db.san_pham;
             if (search != "")
             {
-                model = model.Where(s => s.ten.Contains(search));
+                query = query + " and ten like N'%"+search+"%'";
+                //model = model.Where(s => s.ten.Contains(search));
             }
 
-            if(price != "")
+            if(price != "" && price != null)
             {
                 string[] price_arr;
                 price_arr = price.Split(':');
                 if(price_arr.Count() > 1)
                 {
-                    model = model.Where(s => s.gia_tien > Int32.Parse(price_arr[0])).Where(s => s.gia_tien < Int32.Parse(price_arr[1]));
+                    query = query + " and gia_tien > " + price_arr[0] + " and gia_tien < " + price_arr[1];
+                    //model = model.Where(s => s.gia_tien > Int32.Parse(price_arr[0])).Where(s => s.gia_tien < Int32.Parse(price_arr[1]));
                 }
                 else
                 {
-                    model = model.Where(s => s.gia_tien > Int32.Parse(price_arr[0]));
+                    query = query + " and gia_tien > " + price_arr[0];
+                    //model = model.Where(s => s.gia_tien > Int32.Parse(price_arr[0]));
                 }
-               
             }
-            if (danh_muc_sp != null)
+            if (danh_muc_sp != "" && danh_muc_sp != null)
             {
-                string[] danh_muc_sp_arr = danh_muc_sp.Split(',');
-                model = model.Where(s => danh_muc_sp_arr.Contains(s.id_loai_sp.ToString()));
+                query = query + " and id_loai_sp in (" + danh_muc_sp + ")";
             }
-            model = model.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+
+            query = query + " order by id desc";
+            //model = model.OrderByDescending(s=>s.id).ToPagedList();
+            model = db.san_pham.SqlQuery(query).ToPagedList(page, pageSize);
             ViewBag.pageSize = pageSize;
             ViewBag.loaiSanPham = loaiSanPham;
             return View(model);
