@@ -30,7 +30,7 @@
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="@Url.Action("Detail", "Product")">@sanPham.ten</a></h6>
+                            <h6><a href="@Url.Action("Detail", "Product",new {id=sanPham.id})">@sanPham.ten</a></h6>
                             <h5>@String.Format(currency, "{0:c0}", sanPham.gia_tien)</h5>
                         </div>
                     </div>
@@ -169,6 +169,7 @@
                                 </div>
                                 <div class="owl-item cloned" style="width: 360px;">
                                     <div class="latest-prdouct__slider__item">
+                                        Trạng thái
                                         @for (int i = 3; i < 6; i++)
                                         {
                                             <a href="#" class="latest-product__item">

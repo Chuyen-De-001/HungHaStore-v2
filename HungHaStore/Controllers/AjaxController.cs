@@ -34,7 +34,24 @@ namespace HungHaStore.Controllers
             return Content(JsonConvert.SerializeObject(response));
         }
 
+       public ActionResult Test()
+        {
+            return Content("false");
+        }
 
+        public ActionResult Order(string email,int id_sp)
+        {
+            DateTime date = DateTime.Now;
+            try
+            {
+                string query = "INSERT INTO [dbo].[dat_hang]([email],[id_sp],[tg_tao]) VALUES ('" + email + "', " + id_sp + ", '" + date.ToString("yyyy-MM-dd") + "')";
+                db.dat_hang.SqlQuery(query);
+                return Content("true");
+            }
+            catch (Exception e){}
+            return Content("false");
+        }
+             
         // Xóa sản phẩm khỏi giỏ hàng
         public ActionResult Remove(int id)
         {
@@ -48,17 +65,5 @@ namespace HungHaStore.Controllers
             return Content("false");
         }
 
-        public string RenderRazorViewToString(string viewName, object model)
-        {
-            ViewData.Model = model;
-            using (var sw = new StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,viewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
     }
 }

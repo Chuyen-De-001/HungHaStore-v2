@@ -145,13 +145,15 @@
     </Compile>
     <Compile Include="Helper\CartHelper.cs" />
     <Compile Include="Models\chitiet_hd.cs" />
+    <Compile Include="Models\dat_hang.cs" />
     <Compile Include="Models\hoa_don.cs" />
+    <Compile Include="Models\kho.cs" />
     <Compile Include="Models\loai_sp.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\nguoi_dung.cs" />
+    <Compile Include="Models\nha_cung_cap.cs" />
     <Compile Include="Models\san_pham.cs" />
     <Compile Include="Models\sysdiagram.cs" />
-    <Compile Include="Models\thongtin_nd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

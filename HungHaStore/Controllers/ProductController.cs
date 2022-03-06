@@ -55,9 +55,12 @@ namespace HungHaStore.Controllers
             return View(model);
         }
 
-        public ActionResult Detail()
+        public ActionResult Detail(int id)
         {
-            return View();
+            san_pham model = db.san_pham.SqlQuery("select * from san_pham where id =" + id).Single();
+            List<san_pham> sanPhamLienQuan = db.san_pham.SqlQuery("select top 4 * from san_pham where id_loai_sp = " + model.id_loai_sp).ToList();
+            ViewBag.sanPhamLienQuan = sanPhamLienQuan;
+            return View(model);
         }
     }
 }

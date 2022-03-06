@@ -6,32 +6,30 @@ namespace HungHaStore.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class thongtin_nd
+    public partial class nha_cung_cap
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public thongtin_nd()
+        public nha_cung_cap()
         {
-            nguoi_dung = new HashSet<nguoi_dung>();
+            san_pham = new HashSet<san_pham>();
         }
 
         public int id { get; set; }
 
-        public int id_nd { get; set; }
-
-        public int gio_tinh { get; set; }
-
         [Required]
-        [StringLength(50)]
-        public string sdt { get; set; }
+        [StringLength(255)]
+        public string ten { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string dia_chi { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime ngay_sinh { get; set; }
+        [StringLength(255)]
+        public string sdt { get; set; }
+
+        [StringLength(255)]
+        public string email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<nguoi_dung> nguoi_dung { get; set; }
+        public virtual ICollection<san_pham> san_pham { get; set; }
     }
 }
