@@ -8,18 +8,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
+using PagedList;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
-    public class ProductController : Controller
+    public class AProductController : Controller
     {
         private Model1 db = new Model1();
 
         // GET: Admin/Product
-        public ActionResult Index()
+        public ActionResult Index(int pageSize = 20,int page = 1)
         {
             var san_pham = db.san_pham.Include(s => s.kho).Include(s => s.loai_sp).Include(s => s.nha_cung_cap);
-            return View(san_pham.ToList());
+            IEnumerable<san_pham> model = db.san_pham.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+            return View(model);
         }
 
         // GET: Admin/Product/Details/5
@@ -43,7 +45,10 @@ namespace HungHaStore.Areas.Admin.Controllers
             ViewBag.id_kho = new SelectList(db.khoes, "id", "id");
             ViewBag.id_loai_sp = new SelectList(db.loai_sp, "id", "ten");
             ViewBag.id_ncc = new SelectList(db.nha_cung_cap, "id", "ten");
-            return View();
+            san_pham model = new san_pham();
+            model.giam_gia = 0;
+            model.mo_ta = "hiện tại chưa có mô tả về sản phẩm.";
+            return View(model);
         }
 
         // POST: Admin/Product/Create
@@ -51,15 +56,22 @@ namespace HungHaStore.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,ten,id_loai_sp,gia_tien,giam_gia,mo_ta,id_kho,id_ncc,hinh_anh,luot_xem,tg_tao")] san_pham san_pham)
+        public ActionResult Create([Bind(Include = "ten,id_loai_sp,gia_tien,giam_gia,mo_ta,id_kho,id_ncc,hinh_anh,luot_xem,tg_tao")] san_pham san_pham, HttpPostedFileBase fileImg)
         {
+            DateTime date = DateTime.Now;
+            san_pham.tg_tao = date;
+            if (fileImg != null && fileImg.ContentLength > 0)
+            {
+                string _path = Path.Combine(Server.MapPath("~/Assest/img/product/"), fileImg.FileName);
+                fileImg.SaveAs(_path);
+                san_pham.hinh_anh = fileImg.FileName;
+            }
             if (ModelState.IsValid)
             {
                 db.san_pham.Add(san_pham);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.id_kho = new SelectList(db.khoes, "id", "id", san_pham.id_kho);
             ViewBag.id_loai_sp = new SelectList(db.loai_sp, "id", "ten", san_pham.id_loai_sp);
             ViewBag.id_ncc = new SelectList(db.nha_cung_cap, "id", "ten", san_pham.id_ncc);
@@ -101,6 +113,8 @@ namespace HungHaStore.Areas.Admin.Controllers
                 }
                 db.Entry(san_pham).State = EntityState.Modified;
                 db.SaveChanges();
+                HttpContext.Session["typeAlert"] = "success";
+                HttpContext.Session["messageAlert"] = "Thêm sản phẩm thành công.";
                 return RedirectToAction("Index");
             }
             ViewBag.id_kho = new SelectList(db.khoes, "id", "id", san_pham.id_kho);

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HungHaStore.Models.loai_sp>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh mục</h2>
+
+<a href="@Url.Action("Create","ACategory")" class="btn btn-primary my-3">Thêm danh mục</a>
+<table class="table">
+    <tr>
+        <th>
+            Tên
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Thời gian tạo
+        </th>
+        <th></th>
+    </tr>
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ten)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mo_ta)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tg_tao)
+    </td>
+    <td>
+        <a class="btn btn-warning" href="@Url.Action("Edit","ACategory",new { id= item.id})">Sửa</a>
+        <a class="btn btn-danger" href="@Url.Action("Delete","ACategory",new { id= item.id})" data-confirm="Chắc chắn xóa? Nếu xóa danh mục sẽ xóa tất cả những sản phẩm trong danh mục đó">Xóa</a>
+    </td>
+</tr>
+}
+</table>

@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc
+@using HungHaStore.Helper;
+@model PagedList.IPagedList<HungHaStore.Models.san_pham>
+@{
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+<a href="@Url.Action("Create","AProduct")" class="btn btn-primary my-3">Thêm sản phẩm</a>
+<table class="table table-striped border">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Danh mục
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Giảm giá
+            </th>
+            <th>
+                Mô tả
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Lượt xem
+            </th>
+            <th>
+                Số lượng trong kho
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.loai_sp.ten)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ten)
+    </td>
+    <td>
+        @String.Format(currency, "{0:c0}", item.gia_tien)
+
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.giam_gia)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mo_ta)
+    </td>
+    <td>
+        <img src="~/Assest/img/product/@Html.DisplayFor(modelItem => item.hinh_anh)" alt="Alternate Text" />
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.luot_xem)
+    </td>
+    <td>
+        @{ 
+            string soluong = "";
+            try
+            {
+                soluong = item.kho.so_luong.ToString();
+            }catch(Exception e)
+            {
+                soluong = e.Message;
+            }
+        }
+        @soluong
+    </td>
+    <td>
+        <a class="btn btn-warning" href="@Url.Action("Edit","AProduct",new { id= item.id})">Sửa</a>
+        <a class="btn btn-danger" href="@Url.Action("Delete","AProduct",new { id= item.id})">Xóa</a>
+    </td>
+</tr>
+    }
+</table>
+<div class="row pb-5">
+    <div class="col">
+        <div class="pagination justify-content-md-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", "AProduct", new { page }))
+        </div>
+    </div>
+</div>

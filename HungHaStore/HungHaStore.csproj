@@ -135,9 +135,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ACategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AStoreController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -840,7 +842,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -850,9 +851,17 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Default\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AProduct\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AProduct\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AProduct\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ACategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ACategory\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ACategory\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AStore\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AStore\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AUser\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AUser\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AUser\Create.cshtml" />
     <None Include="packages.config" />
     <Content Include="App_Data\js-dèault\jquery-3.4.1.slim.min.map" />
     <Content Include="App_Data\js-dèault\jquery-3.4.1.min.map" />

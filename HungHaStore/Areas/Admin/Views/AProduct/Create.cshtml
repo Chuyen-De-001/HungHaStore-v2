@@ -1,21 +1,21 @@
 ﻿@model HungHaStore.Models.san_pham
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Thông tin sản phẩm</h2>
-
-@using (Html.BeginForm("update-san-pham","Product/Edit", FormMethod.Post,new { @enctype = "multipart/form-data" }))
+<h2>Thêm sản phẩm mới</h2>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@using (Html.BeginForm("create-san-pham", "AProduct/Create", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+    <div class="form-horizontal pb-5">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.id_loai_sp, "id_loai_sp", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.id_loai_sp, "Danh mục sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("id_loai_sp", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.id_loai_sp, "", new { @class = "text-danger" })
@@ -57,7 +57,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="id_ncc">Nhà cung cấp</label>
+            @Html.LabelFor(model => model.id_ncc, "Nhà cung cấp", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("id_ncc", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.id_ncc, "", new { @class = "text-danger" })
@@ -68,29 +68,18 @@
             <img src="~/Assest/img/product/@Html.DisplayFor(model => model.hinh_anh)" id="img_product" alt="@Html.DisplayFor(model => model.hinh_anh)" style="padding:0px 15px;max-height:200px" />
             <br />
             <div class="col-md-10">
-                @Html.EditorFor(model => model.hinh_anh, new { htmlAttributes = new { @class = "form-control", @type="hidden" } })
+                @Html.EditorFor(model => model.hinh_anh, new { htmlAttributes = new { @class = "form-control", @type = "hidden" } })
                 @Html.TextBox("fileImg", "", new { type = "file", @class = "form-control" }) <br />
                 @Html.ValidationMessageFor(model => model.hinh_anh, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.luot_xem, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.luot_xem, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.luot_xem, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 <script>
     $(document).on("change", "#fileImg", function (event) {
         var url_img = URL.createObjectURL(event.target.files[0]);
@@ -98,3 +87,4 @@
         $("#img_product").attr('src', url_img);
     })
 </script>
+

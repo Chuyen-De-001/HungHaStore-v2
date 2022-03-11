@@ -1,0 +1,42 @@
+﻿@model HungHaStore.Models.kho
+@using HungHaStore.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    san_pham sanPham = ViewBag.sanPham;
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Kho hàng</h4>
+    <br />
+    <p><label class="control-label col-md-2"><a href="@Url.Action("Edit", "AStore", new { id=sanPham.id })"><b>Quay lại</b></a></label></p>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="so_luong">Sản phẩm</label>
+        <div class="col-md-10">
+            <input class="form-control text-box single-line" value="@sanPham.ten" readonly>
+            <span class="field-validation-valid text-danger" data-valmsg-for="so_luong" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="so_luong">Số lượng</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.so_luong, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.so_luong, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
