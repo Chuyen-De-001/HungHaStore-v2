@@ -1,0 +1,76 @@
+﻿@model HungHaStore.Models.hoa_don
+@using HungHaStore.Models;
+@using HungHaStore.Helper;
+@{
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    ViewBag.Title = "Checkout";
+    List<chitiet_hd> chiTietHDs = ViewBag.chiTietHDs;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row p-3">
+                        <div class="col-md-6">
+                            <img src="/Assest/img/logo.png">
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <p class="font-weight-bold mb-1">Invoice #@Model.id</p>
+                            <p class="text-muted">@Model.tg_tao.ToString("yyyy/MM/dd")</p>
+                            @if (Model.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                            {
+                                <p class="text-warning font-weight-bold">Đang xử lý</p>
+                            }
+                            else
+                            {
+                                <p class="text-success font-weight-bold">Thanh toán thành công</p>
+                            }
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row p-5">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Sản phẩm</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Số lương</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Đơn giá</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (chitiet_hd item in chiTietHDs)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.san_pham.ten
+                                            </td>
+                                            <td>@item.so_luong</td>
+                                            <td>@item.gia_tien</td>
+                                            <td>@{int tong_tien = item.so_luong * item.gia_tien;} @String.Format(currency, "{0:c0}",tong_tien)</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row-reverse bg-dark text-white p-4">
+                        <div class="py-3 px-5 text-right">
+                            <div class="mb-2">Thành tiền</div>
+                            <div class="h2 font-weight-light">@String.Format(currency, "{0:c0}", Model.tong_tien)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-light mt-5 mb-5 text-center small">by : <a class="text-light" target="_blank" href="http://totoprayogo.com">totoprayogo.com</a></div>
+
+</div>
+

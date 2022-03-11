@@ -45,7 +45,7 @@ namespace HungHaStore.Controllers
             try
             {
                 string query = "INSERT INTO [dbo].[dat_hang]([email],[id_sp],[tg_tao]) VALUES ('" + email + "', " + id_sp + ", '" + date.ToString("yyyy-MM-dd") + "')";
-                db.dat_hang.SqlQuery(query);
+                db.Database.ExecuteSqlCommand(query);
                 return Content("true");
             }
             catch (Exception e){}

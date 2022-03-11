@@ -8,7 +8,7 @@ namespace HungHaStore.Helper
 {
     public class CartHelper
     {
-
+        public static Model1 db = new Model1();
         //Thêm sản phẩm vào giỏ hàng.
         public static List<Cart> Add(san_pham sanPham)
         {
@@ -17,7 +17,8 @@ namespace HungHaStore.Helper
             cart.id_san_pham = sanPham.id;
             cart.hinh_anh = sanPham.hinh_anh;
             cart.ten = sanPham.ten;
-            cart.gia_tien = (int)sanPham.gia_tien;
+            cart.giam_gia = sanPham.giam_gia;
+            cart.gia_tien = CalculatorHelper.priceSale(cart.giam_gia,sanPham.gia_tien);
             cart.so_luong = 1;
             cart.tong = cart.so_luong * cart.gia_tien;
 
@@ -74,7 +75,7 @@ namespace HungHaStore.Helper
                 if (list == null) { return 0; }
                 foreach (Cart item in list)
                 {
-                    total += item.tong;
+                    total = total + CalculatorHelper.priceSale(item.giam_gia, item.gia_tien);
                 }
             }
             catch { }
@@ -117,6 +118,7 @@ namespace HungHaStore.Helper
         public int so_luong { get; set; }
         public int tong { get; set; }
         public string ten { get; set; }
+        public int giam_gia { get; set; }
         public int gia_tien { get; set; }
         public string hinh_anh { get; set; }
     }

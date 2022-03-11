@@ -14,6 +14,7 @@ namespace HungHaStore.Models
             san_pham = new HashSet<san_pham>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]

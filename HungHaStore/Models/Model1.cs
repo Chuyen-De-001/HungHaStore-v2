@@ -8,7 +8,7 @@ namespace HungHaStore.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=MyDB")
+            : base("name=Model1")
         {
         }
 

@@ -1,4 +1,5 @@
 ﻿@using HungHaStore.Models;
+@using HungHaStore.Helper;
 @{ 
     var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     ViewBag.Title = "Trang chủ";
@@ -23,6 +24,10 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-id="@sanPham.id">
+                            @if (sanPham.giam_gia > 0)
+                            {
+                                <span class="badge badge-pill badge-danger" style="position:absolute">SALE</span>
+                            }
                             <img src="/Assest/img/product/@sanPham.hinh_anh" alt="@sanPham.ten" />
                             <ul class="featured__item__pic__hover">
                                 <li><a href="javascript:void(0)"><i class="fa fa-retweet"></i></a></li>
@@ -31,11 +36,19 @@
                         </div>
                         <div class="featured__item__text">
                             <h6><a href="@Url.Action("Detail", "Product",new {id=sanPham.id})">@sanPham.ten</a></h6>
-                            <h5>@String.Format(currency, "{0:c0}", sanPham.gia_tien)</h5>
+                            @if (sanPham.giam_gia > 0)
+                            {
+                                <h4 style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", sanPham.gia_tien)</h4>
+                                <h4 class="text-danger font-weight-bold">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(sanPham.giam_gia, sanPham.gia_tien))</h4>
+                            }
+                            else
+                            {
+                                <h4 class="font-weight-bold">@String.Format(currency, "{0:c0}", sanPham.gia_tien)</h4>
+                            }
                         </div>
                     </div>
                 </div>
-            }
+             }
         </div>
     </div>
 </section>
@@ -61,132 +74,109 @@
             <div class="col-lg-4 col-md-6">
                 <div class="latest-product__text">
                     <h4>Mới nhất</h4>
-                    <div class="latest-product__slider owl-carousel owl-loaded owl-drag">
-                        <div class="owl-stage-outer">
-                            <div class="owl-stage" style="transform: translate3d(-990px, 0px, 0px); transition: all 1.2s ease 0s; width: 1980px;">
-                                <div class="owl-item cloned active" style="width: 330px;">
-                                    <div class="latest-prdouct__slider__item">
-                                        @for (int i = 0; i < 3; i++)
-                                        {
-                                            <a href="#" class="latest-product__item">
-                                                <div class="latest-product__item__pic">
-                                                    <img src="/Assest/img/product/@sanPhamMoiNhat[i].hinh_anh" alt="@sanPhamMoiNhat[i].hinh_anh">
-                                                </div>
-                                                <div class="latest-product__item__text">
-                                                    <h6>@sanPhamMoiNhat[i].ten</h6>
-                                                    <span>@String.Format(currency, "{0:c0}", sanPhamMoiNhat[i].gia_tien)</span>
-                                                </div>
-                                            </a>
-                                        }
-                                    </div>
+                    @if (sanPhamMoiNhat.Count() > 0)
+                    {
+                        foreach (san_pham item in sanPhamMoiNhat)
+                        {
+                            <a href="@Url.Action("Detail", "Product", new { id = item.id })" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span class="badge badge-pill badge-danger text-white" style="position:absolute">SALE</span>
+                                    }
+                                    <img src="/Assest/img/product/@item.hinh_anh" alt="@item.hinh_anh">
                                 </div>
-                                <div class="owl-item cloned" style="width: 360px;">
-                                    <div class="latest-prdouct__slider__item">
-                                        @for (int i = 3; i < 6; i++)
-                                        {
-                                            <a href="#" class="latest-product__item">
-                                                <div class="latest-product__item__pic">
-                                                    <img src="/Assest/img/product/@sanPhamMoiNhat[i].hinh_anh" alt="@sanPhamMoiNhat[i].hinh_anh">
-                                                </div>
-                                                <div class="latest-product__item__text">
-                                                    <h6>@sanPhamMoiNhat[i].ten</h6>
-                                                    <span>@String.Format(currency, "{0:c0}", sanPhamMoiNhat[i].gia_tien)</span>
-                                                </div>
-                                            </a>
-                                        }
-                                    </div>
+                                <div class="latest-product__item__text">
+                                    <h6>@item.ten</h6>
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                        <span class="text-danger">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia,item.gia_tien))</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                    }
                                 </div>
-                            </div>
-
-                        </div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span class="fa fa-angle-left"><span></span></span></button><button type="button" role="presentation" class="owl-next"><span class="fa fa-angle-right"><span></span></span></button></div><div class="owl-dots disabled"></div>
-                    </div>
+                            </a>
+                        }
+                    }else {
+                        <p>Không có dữ liệu </p>
+                    }
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="latest-product__text">
                     <h4>Xem nhiều</h4>
-                    <div class="latest-product__slider owl-carousel owl-loaded owl-drag">
-                        <div class="owl-stage-outer">
-                            <div class="owl-stage" style="transform: translate3d(-990px, 0px, 0px); transition: all 1.2s ease 0s; width: 1980px;">
-                                <div class="owl-item cloned active" style="width: 330px;">
-                                    <div class="latest-prdouct__slider__item">
-                                        @for (int i = 0; i < 3; i++)
-                                        {
-                                            <a href="#" class="latest-product__item">
-                                                <div class="latest-product__item__pic">
-                                                    <img src="/Assest/img/product/@sanPhamXemNhieu[i].hinh_anh" alt="@sanPhamXemNhieu[i].hinh_anh">
-                                                </div>
-                                                <div class="latest-product__item__text">
-                                                    <h6>@sanPhamXemNhieu[i].ten</h6>
-                                                    <span>@String.Format(currency, "{0:c0}", sanPhamXemNhieu[i].gia_tien)</span>
-                                                </div>
-                                            </a>
-                                        }
-                                    </div>
+                    @if (sanPhamXemNhieu.Count() > 0)
+                    {
+                        foreach (san_pham item in sanPhamXemNhieu)
+                        {
+                            <a href="@Url.Action("Detail","Product",new { id =item.id })" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span class="badge badge-pill badge-danger text-white" style="position:absolute">SALE</span>
+                                    }
+                                    <img src="/Assest/img/product/@item.hinh_anh" alt="@item.hinh_anh">
                                 </div>
-                                <div class="owl-item cloned" style="width: 360px;">
-                                    <div class="latest-prdouct__slider__item">
-                                        @for (int i = 3; i < 6; i++)
-                                        {
-                                            <a href="#" class="latest-product__item">
-                                                <div class="latest-product__item__pic">
-                                                    <img src="/Assest/img/product/@sanPhamXemNhieu[i].hinh_anh" alt="@sanPhamXemNhieu[i].hinh_anh">
-                                                </div>
-                                                <div class="latest-product__item__text">
-                                                    <h6>@sanPhamXemNhieu[i].ten</h6>
-                                                    <span>@String.Format(currency, "{0:c0}", sanPhamXemNhieu[i].gia_tien)</span>
-                                                </div>
-                                            </a>
-                                        }
-                                    </div>
+                                <div class="latest-product__item__text">
+                                    <h6>@item.ten</h6>
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                        <span class="text-danger">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia, item.gia_tien))</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                    }
                                 </div>
-                            </div>
-                        </div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span class="fa fa-angle-left"><span></span></span></button><button type="button" role="presentation" class="owl-next"><span class="fa fa-angle-right"><span></span></span></button></div><div class="owl-dots disabled"></div>
-                    </div>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <p>Không có dữ liệu </p>
+                    }
                 </div>
             </div>
+
             <div class="col-lg-4 col-md-6">
                 <div class="latest-product__text">
-                    <h4>Giảm giá</h4>
-                    <div class="latest-product__slider owl-carousel owl-loaded owl-drag">
-                        <div class="owl-stage-outer">
-                            <div class="owl-stage" style="transform: translate3d(-990px, 0px, 0px); transition: all 1.2s ease 0s; width: 1980px;">
-                                <div class="owl-item cloned active" style="width: 330px;">
-                                    <div class="latest-prdouct__slider__item">
-                                        @for (int i = 0; i < 3; i++)
-                                        {
-                                            <a href="#" class="latest-product__item">
-                                                <div class="latest-product__item__pic">
-                                                    <img src="/Assest/img/product/@sanPhamGiamGia[i].hinh_anh" alt="@sanPhamGiamGia[i].hinh_anh">
-                                                </div>
-                                                <div class="latest-product__item__text">
-                                                    <h6>@sanPhamGiamGia[i].ten</h6>
-                                                    <span>@String.Format(currency, "{0:c0}", sanPhamGiamGia[i].gia_tien)</span>
-                                                </div>
-                                            </a>
-                                        }
-                                    </div>
+                    <h4>Xem nhiều</h4>
+                    @if (sanPhamGiamGia.Count() > 0)
+                    {
+                        foreach (san_pham item in sanPhamGiamGia)
+                        {
+                            <a href="@Url.Action("Detail","Product",new { id =item.id })" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span class="badge badge-pill badge-danger text-white" style="position:absolute">SALE</span>
+                                    }
+                                    <img src="/Assest/img/product/@item.hinh_anh" alt="@item.hinh_anh">
                                 </div>
-                                <div class="owl-item cloned" style="width: 360px;">
-                                    <div class="latest-prdouct__slider__item">
-                                        Trạng thái
-                                        @for (int i = 3; i < 6; i++)
-                                        {
-                                            <a href="#" class="latest-product__item">
-                                                <div class="latest-product__item__pic">
-                                                    <img src="/Assest/img/product/@sanPhamGiamGia[i].hinh_anh" alt="@sanPhamGiamGia[i].hinh_anh">
-                                                </div>
-                                                <div class="latest-product__item__text">
-                                                    <h6>@sanPhamGiamGia[i].ten</h6>
-                                                    <span>@String.Format(currency, "{0:c0}", sanPhamGiamGia[i].gia_tien)</span>
-                                                </div>
-                                            </a>
-                                        }
-                                    </div>
+                                <div class="latest-product__item__text">
+                                    <h6>@item.ten</h6>
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                        <span class="text-danger">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia, item.gia_tien))</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                    }
                                 </div>
-                            </div>
-                        </div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span class="fa fa-angle-left"><span></span></span></button><button type="button" role="presentation" class="owl-next"><span class="fa fa-angle-right"><span></span></span></button></div><div class="owl-dots disabled"></div>
-                    </div>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <p>Không có dữ liệu </p>
+                    }
+
                 </div>
             </div>
         </div>

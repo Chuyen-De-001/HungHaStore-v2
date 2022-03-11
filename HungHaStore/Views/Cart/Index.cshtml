@@ -36,17 +36,29 @@
                                 {
                                     <tr data-id="@item.id_san_pham">
                                         <td class="shoping__cart__item">
+                                            @if (item.giam_gia > 0)
+                                            {
+                                                <span class="badge badge-pill badge-danger" style="position:absolute">SALE</span>
+                                            }
                                             <img src="/Assest/img/product/@item.hinh_anh" alt="@item.ten" height="100px" width="auto">
                                             <h5>@item.ten</h5>
                                         </td>
                                         <td class="shoping__cart__price">
-                                            @String.Format(currency, "{0:c0}", item.gia_tien)
+                                            @if (item.giam_gia > 0)
+                                            {
+                                                <h5 style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
+                                                <h5 class="text-danger font-weight-bold">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia, item.gia_tien))</h5>
+                                            }
+                                            else
+                                            {
+                                                <h5 class="font-weight-bold">@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
+                                            }
                                         </td>
                                         <td class="shoping__cart__quantity">
                                             <span class="font-weight-bold text-dark">@item.so_luong</span>
                                         </td>
                                         <td class="shoping__cart__total">
-                                            @String.Format(currency, "{0:c0}", item.gia_tien)
+                                            @String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia,item.gia_tien))
                                         </td>
                                         <td class="shoping__cart__item__close">
                                             <span class="icon_close"></span>
@@ -83,7 +95,7 @@
                         <li>PHỤ <span>0 đ</span></li>
                         <li>TỔNG <span>@String.Format(currency, "{0:c0}", CartHelper.sumMoney())</span></li>
                     </ul>
-                    <a href="#" class="primary-btn">XỬ LÝ HÓA ĐƠN</a>
+                    <a href="@Url.Action("CreateInvoice","Cart")" class="primary-btn">XỬ LÝ HÓA ĐƠN</a>
                 </div>
             </div>
         </div>

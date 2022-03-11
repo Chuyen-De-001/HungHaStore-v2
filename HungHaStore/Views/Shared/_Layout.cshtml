@@ -1,5 +1,6 @@
 ﻿@using HungHaStore.Models;
 @using HungHaStore.Helper;
+@using System.Web; 
 @{ 
     Model1 db = new Model1();
     var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
@@ -10,13 +11,17 @@
     string currentAction = ViewContext.RouteData.Values["controller"].ToString() + "/" + ViewContext.RouteData.Values["action"].ToString();
     string _class_hero_normal = "";
     string search = Request.QueryString["search"];
+    string _typeAlert = (string)HttpContext.Current.Session["typeAlert"];
+    string _messageAlert = (string)HttpContext.Current.Session["messageAlert"];
+    nguoi_dung _identity = AuthorHelper.getIdentity();
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/x-icon" href="~/Assest/img/favicon.png">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -43,7 +48,7 @@
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
                             <div class="header__top__right__language">
-                                <img src="/Assest/img/language.png" alt="">
+                                <img src="/Assest/img/viet-nam.png" height="20px" alt="">
                                 <div>Việt Nam</div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
@@ -53,7 +58,25 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="@Url.Action("Login", "Security")"><i class="fa fa-user"></i> Login</a>
+                                @if (AuthorHelper.isLogin() == true)
+                                {
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" href="javascript:void(0)" id="dropinfo" data-toggle="dropdown">
+                                            @_identity.email
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropinfo">
+                                            <a class="dropdown-item" href="@Url.Action("Edit","Profile",new { id = _identity.id})">Thông tin tài khoản</a>
+                                            <a class="dropdown-item" href="@Url.Action("ListInvoice","Home")">Hóa đơn</a>
+                                            <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="@Url.Action("Logout","Security")">Đăng xuất</a>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Security")"><i class="fa fa-user"></i> Đăng nhập</a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -135,7 +158,18 @@
                 </div>
             </div>
         </div>
-        </div>
+        @if (_typeAlert != null)
+        {
+            <div class="alert alert-@_typeAlert alert-dismissible fade show mt-3" role="alert">
+                @_messageAlert
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            HttpContext.Current.Session.Remove("typeAlert");
+            HttpContext.Current.Session.Remove("messageAlert");
+        }
+
     </section>
     @RenderBody()
     <footer class="footer spad">

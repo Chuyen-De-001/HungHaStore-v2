@@ -85,6 +85,10 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg" data-id="@item.id">
+                                        @if (item.giam_gia > 0)
+                                        {
+                                            <span class="badge badge-pill badge-danger" style="position:absolute">SALE</span>
+                                        }
                                         <img src="/Assest/img/product/@item.hinh_anh" alt="@item.ten" />
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -92,8 +96,16 @@
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><a href="#">@item.ten</a></h6>
-                                        <h5>@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
+                                        <h6><a href="@Url.Action("Detail","Product",new { id = item.id })">@item.ten</a></h6>
+                                        @if (item.giam_gia > 0)
+                                        {
+                                            <span style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                            <span class="text-danger">@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@String.Format(currency, "{0:c0}", item.gia_tien)</span>
+                                        }
                                     </div>
                                 </div>
                             </div>

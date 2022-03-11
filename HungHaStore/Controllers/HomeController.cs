@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HungHaStore.Helper;
+using System.Net;
+using System.Data.Entity;
 
 namespace HungHaStore.Controllers
 {
@@ -13,12 +16,11 @@ namespace HungHaStore.Controllers
         public ActionResult Index()
         {
             // lấy dữ liệu từ database
-            
             var loaiSanPham = db.loai_sp.SqlQuery("select * from loai_sp").ToList(); 
             var sanPhamNoiBat = db.san_pham.SqlQuery("select TOP 16 * from san_pham ").ToList(); 
-            var sanPhamMoiNhat = db.san_pham.SqlQuery("select TOP 6 * from san_pham order by tg_tao desc").ToList();
-            var sanPhamXemNhieu = db.san_pham.SqlQuery("select TOP 6 * from san_pham order by luot_xem desc").ToList();
-            var sanPhamGiamGia = db.san_pham.SqlQuery("select TOP 6 * from san_pham order by giam_gia desc").ToList();
+            var sanPhamMoiNhat = db.san_pham.SqlQuery("select TOP 4 * from san_pham order by tg_tao desc").ToList();
+            var sanPhamXemNhieu = db.san_pham.SqlQuery("select TOP 4 * from san_pham order by luot_xem desc").ToList();
+            var sanPhamGiamGia = db.san_pham.SqlQuery("select TOP 4 * from san_pham where giam_gia > 0 order by giam_gia desc").ToList();
             //----------------------------------
 
 
@@ -44,23 +46,15 @@ namespace HungHaStore.Controllers
             return View();
         }
 
-        public ActionResult Test()
+        public ActionResult ListInvoice()
         {
-            List<san_pham> list = db.san_pham.SqlQuery("select * from san_pham").ToList();
-            Random rnd = new Random();
-            foreach (san_pham item in list)
+            nguoi_dung identity = AuthorHelper.getIdentity();
+            if(identity == null)
             {
-                kho kho = new kho();
-                kho.so_luong = rnd.Next(1, 50);
-                db.khoes.Add(kho);
-                db.SaveChanges();
-                Response.Write(kho.id);
-                item.id_kho = kho.id;
-                UpdateModel(item);
-                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
-            
-            return View();
+            List<hoa_don> hoaDons = db.hoa_don.Where(s => s.id_nd == identity.id).ToList();
+            return View(hoaDons);
         }
     }
 }

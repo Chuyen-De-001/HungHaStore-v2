@@ -8,6 +8,9 @@ namespace HungHaStore.Models
 
     public partial class hoa_don
     {
+        public const int TRANG_THAI_XU_LY = 0;
+        public const int TRANG_THAI_HOPAN_THANH = 1;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public hoa_don()
         {

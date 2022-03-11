@@ -1,0 +1,69 @@
+﻿@model IEnumerable<HungHaStore.Models.san_pham>
+@using HungHaStore.Helper;
+@{
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+<a href="" class="btn btn-primary my-3">Thêm sản phẩm</a>
+<table class="table">
+    <tr>
+        <th>
+            Danh mục 
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gia_tien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.giam_gia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mo_ta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hinh_anh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.luot_xem)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.loai_sp.ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ten)
+        </td>
+        <td>
+            @String.Format(currency, "{0:c0}", item.gia_tien)
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.giam_gia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mo_ta)
+        </td>
+        <td>
+            <img src="~/Assest/img/product/@Html.DisplayFor(modelItem => item.hinh_anh)" alt="Alternate Text" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.luot_xem)
+        </td>
+        <td>
+            <a class="btn btn-warning" href="@Url.Action("Edit","Product",new { id= item.id})">Sửa</a>
+            <a class="btn btn-danger" href="@Url.Action("Delete","Product",new { id= item.id})">Xóa</a>
+        </td>
+    </tr>
+}
+
+</table>

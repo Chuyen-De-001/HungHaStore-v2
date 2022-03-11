@@ -1,7 +1,8 @@
-namespace HungHaStore.Models
+﻿namespace HungHaStore.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -15,33 +16,42 @@ namespace HungHaStore.Models
             dat_hang = new HashSet<dat_hang>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
         [StringLength(255)]
+        [DisplayName("Tên sản phẩm")]
         public string ten { get; set; }
 
+        [DisplayName("Danh mục")]
         public int id_loai_sp { get; set; }
 
+        [DisplayName("Giá")]
         public int gia_tien { get; set; }
 
+        [DisplayName("Giảm giá")]
         public int giam_gia { get; set; }
 
         [Required]
         [StringLength(255)]
+        [DisplayName("Mô tả")]
         public string mo_ta { get; set; }
 
         public int? id_kho { get; set; }
 
+        [DisplayName("Nhà cung cấp")]
         public int? id_ncc { get; set; }
 
-        [Required]
         [StringLength(255)]
+        [DisplayName("Hình ảnh")]
         public string hinh_anh { get; set; }
 
+        [DisplayName("Lượt xem")]
         public int luot_xem { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayName("Thời gian tạo")]
         public DateTime tg_tao { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

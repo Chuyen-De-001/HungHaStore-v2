@@ -9,7 +9,7 @@
             <div class="wrap d-md-flex" style="box-shadow: 0 10px 34px -15px rgb(0 0 0 / 24%); ">
                 <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last col" style="background: #7dd352;">
                     <div class="text w-100">
-                        <h2>Chào mừng đến với đồ gỗ Hưng Hà</h2>
+                        <h2 class="mb-3">Chào mừng đến với đồ gỗ Hưng Hà</h2>
                         <p>Bạn đã có tài khoản?</p>
                         <a href="@Url.Action("Login", "Security")" class="btn btn-outline-light">Đăng nhập</a>
                     </div>
@@ -20,21 +20,25 @@
                             <h3 class="mb-4">Đăng kí</h3>
                         </div>
                     </div>
-                    <form action="#" class="signin-form">
+                    <form action="#" class="signin-form" onsubmit="return valid()" method="get">
                         <div class="form-group mb-3">
                             <label class="label" for="name">Tài khoản</label>
-                            <input type="text" class="form-control" placeholder="Tài khoản" required="">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required="" minlength="6">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="label" for="name">Tài khoản</label>
+                            <input type="text" class="form-control" name="username" placeholder="Tài khoản" required="" minlength="6">
                         </div>
                         <div class="form-group mb-3">
                             <label class="label" for="password">Mật khẩu</label>
-                            <input type="password" class="form-control" placeholder="Mật khẩu" required="">
+                            <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required="" minlength="6">
                         </div>
                         <div class="form-group mb-3">
                             <label class="label" for="password">Nhập lại mật khẩu</label>
-                            <input type="password" class="form-control" placeholder="Mật khẩu" required="">
+                            <input type="password" class="form-control" name="repassword" placeholder="Nhập lại mật khẩu" required="" minlength="6">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="form-control btn btn-primary submit px-3">Đăng kí</button>
+                            <button type="submit" class="form-control btn btn-primary submit px-3" name="submit" value="register">Đăng kí</button>
                         </div>
                     </form>
                 </div>
@@ -42,4 +46,17 @@
         </div>
     </div>
 </div>
+<script>
+    function valid() {
+        var password = $("input[name=password]");
+        var re_password = $("input[name=repassword]");
+        if (password.val() != re_password.val()) {
+            alert("Nhập lại mật khẩu không khớp với mật khẩu");
+            re_password.focus();
+            return false;
+        }
+        return true;
+    }
+
+</script>
 

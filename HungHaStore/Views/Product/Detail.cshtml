@@ -42,7 +42,17 @@
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    <div class="product__details__price">@String.Format(currency, "{0:c0}", Model.gia_tien)</div>
+                    <div class="product__details__price">
+                        @if (Model.giam_gia > 0)
+                        {
+                            <span style="text-decoration:line-through;font-size:80%;color:black">@String.Format(currency, "{0:c0}", Model.gia_tien)</span>
+                            <span class="text-danger">@String.Format(currency, "{0:c0}", Model.gia_tien)</span>
+                        }
+                        else
+                        {
+                            <span>@String.Format(currency, "{0:c0}", Model.gia_tien)</span>
+                        }
+                    </div>
                     <p>
                         @Model.mo_ta
                     </p>

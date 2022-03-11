@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HungHaStore.Models.hoa_don>
+@using HungHaStore.Models;
+@{
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    ViewBag.Title = "ListInvoice";
+}
+
+<div class="container">
+    <h2 class="mb-5">Hóa đơn</h2>
+    <table class="table">
+        <tr>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>
+                Thời gian tạo
+            </th>
+            <th>Hành động</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                    {
+                        <p class="text-warning font-weight-bold">Đang xử lý</p>
+                    }
+                    else
+                    {
+                        <p class="text-success font-weight-bold">Thanh toán thành công</p>
+                    }
+                </td>
+                <td>
+                    @String.Format(currency, "{0:c0}", item.tong_tien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tg_tao)
+                </td>
+                <td>
+                    <a href="@Url.Action("Checkout","Cart",new { id = item.id })">Chi tiết</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
