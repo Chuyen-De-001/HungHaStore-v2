@@ -7,22 +7,31 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
+using HungHaStore.Helper;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
-    public class ACategoryController : Controller
+    public class ACategoryController : AuthorController
     {
         private Model1 db = new Model1();
 
         // GET: Admin/Category
         public ActionResult Index()
         {
+            if(AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             return View(db.loai_sp.ToList());
         }
 
         // GET: Admin/Category/Details/5
         public ActionResult Details(int? id)
         {
+            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,6 +47,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/Category/Create
         public ActionResult Create()
         {
+            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             return View();
         }
 
@@ -48,6 +61,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,ten,mo_ta,tg_tao")] loai_sp loai_sp)
         {
+            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (ModelState.IsValid)
             {
                 db.loai_sp.Add(loai_sp);
@@ -63,6 +80,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/Category/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -82,6 +103,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,ten,mo_ta,tg_tao")] loai_sp loai_sp)
         {
+            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(loai_sp).State = EntityState.Modified;
@@ -96,6 +121,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/Category/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             loai_sp model = db.loai_sp.Find(id);
             db.loai_sp.Remove(model);
             db.SaveChanges();

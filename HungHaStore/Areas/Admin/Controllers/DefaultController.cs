@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
-    public class DefaultController : Controller
+    public class DefaultController : AuthorController
     {
         // GET: Admin/Default
         public ActionResult Index()

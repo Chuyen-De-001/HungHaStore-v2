@@ -43,7 +43,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ngay_sinh, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ngay_sinh, new { htmlAttributes = new { @class = "form-control", @type = "date", @Value=Model.ngay_sinh.ToString("yyyy-MM-dd") } })
+            @Html.EditorFor(model => model.ngay_sinh, new { htmlAttributes = new { @class = "form-control", @type = "date", @Value= Model.ngay_sinh.Value.ToString("yyyy-MM-dd") } })
             @Html.ValidationMessageFor(model => model.ngay_sinh, "", new { @class = "text-danger" })
         </div>
     </div>

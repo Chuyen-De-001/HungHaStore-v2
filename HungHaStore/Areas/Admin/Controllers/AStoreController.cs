@@ -10,7 +10,7 @@ using HungHaStore.Models;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
-    public class AStoreController : Controller
+    public class AStoreController : AuthorController
     {
         private Model1 db = new Model1();
         

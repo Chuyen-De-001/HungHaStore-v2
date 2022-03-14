@@ -12,7 +12,7 @@ using PagedList;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
-    public class AProductController : Controller
+    public class AProductController : AuthorController
     {
         private Model1 db = new Model1();
 

@@ -19,12 +19,7 @@ namespace HungHaStore.Helper
             try
             {
                 nguoi_dung nguoidung = (nguoi_dung)HttpContext.Current.Session["loginSesstion"];
-                if(nguoidung == null)
-                {
-                    return null;
-                }
-                nguoi_dung identity = db.nguoi_dung.Where(s=>s.id == nguoidung.id).SingleOrDefault();
-                return identity;
+                return nguoidung;
             }
             catch
             {
@@ -44,6 +39,17 @@ namespace HungHaStore.Helper
                 return false;
             }
             return true;
+        }
+
+        //Kiểm tra user đang đăng nhập có quyền admin hay không.
+        //user.quyen == 1
+        public static bool isAdmin(nguoi_dung nguoi_Dung)
+        {
+            if(nguoi_Dung.quyen == 1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -10,107 +10,104 @@ using HungHaStore.Models;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
-    public class AUserController : AuthorController
+    public class AInvoiceController : AuthorController
     {
         private Model1 db = new Model1();
 
-        // GET: Admin/AUser
+        // GET: Admin/AInvoice
         public ActionResult Index()
         {
-            return View(db.nguoi_dung.ToList());
+            var hoa_don = db.hoa_don.Include(h => h.nguoi_dung);
+            return View(hoa_don.ToList());
         }
 
-        // GET: Admin/AUser/Details/5
+        // GET: Admin/AInvoice/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            hoa_don hoaDon = db.hoa_don.Where(s => s.id == id).SingleOrDefault();
+            if(hoaDon != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                List<chitiet_hd> chiTietHDs = db.chitiet_hd.Where(s => s.id_hd == id).ToList();
+                ViewBag.chiTietHDs = chiTietHDs;
+                return View(hoaDon);
             }
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            if (nguoi_dung == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nguoi_dung);
+            return RedirectToAction("Index","Home");
         }
 
-        // GET: Admin/AUser/Create
+        // GET: Admin/AInvoice/Create
         public ActionResult Create()
         {
+            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan");
             return View();
         }
 
-        // POST: Admin/AUser/Create
+        // POST: Admin/AInvoice/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,tai_khoan,mat_khau,email,ngay_sinh,sdt,dia_chi,gioi_tinh,quyen,tg_tao")] nguoi_dung nguoi_dung)
+        public ActionResult Create([Bind(Include = "id,id_nd,trang_thai,tong_tien,tg_tao")] hoa_don hoa_don)
         {
             if (ModelState.IsValid)
             {
-                db.nguoi_dung.Add(nguoi_dung);
+                db.hoa_don.Add(hoa_don);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(nguoi_dung);
+            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan", hoa_don.id_nd);
+            return View(hoa_don);
         }
 
-        // GET: Admin/AUser/Edit/5
+        // GET: Admin/AInvoice/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            if (nguoi_dung == null)
+            hoa_don hoa_don = db.hoa_don.Find(id);
+            if (hoa_don == null)
             {
                 return HttpNotFound();
             }
-            return View(nguoi_dung);
+            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan", hoa_don.id_nd);
+            return View(hoa_don);
         }
 
-        // POST: Admin/AUser/Edit/5
+        // POST: Admin/AInvoice/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,tai_khoan,mat_khau,email,ngay_sinh,sdt,dia_chi,gioi_tinh,quyen,tg_tao")] nguoi_dung nguoi_dung)
+        public ActionResult Edit([Bind(Include = "id,id_nd,trang_thai,tong_tien,tg_tao")] hoa_don hoa_don)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(nguoi_dung).State = EntityState.Modified;
+                db.Entry(hoa_don).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(nguoi_dung);
+            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan", hoa_don.id_nd);
+            return View(hoa_don);
         }
 
-        // GET: Admin/AUser/Delete/5
+        // GET: Admin/AInvoice/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            if (nguoi_dung == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nguoi_dung);
+            hoa_don hoa_don = db.hoa_don.Find(id);
+            db.hoa_don.Remove(hoa_don);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        // POST: Admin/AUser/Delete/5
+        // POST: Admin/AInvoice/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            db.nguoi_dung.Remove(nguoi_dung);
+            hoa_don hoa_don = db.hoa_don.Find(id);
+            db.hoa_don.Remove(hoa_don);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

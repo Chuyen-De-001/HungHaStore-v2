@@ -65,7 +65,7 @@ namespace HungHaStore.Helper
         }
 
 
-        //Tính tổng tiền trong giỏ hàng.
+        //Tính tổng tiền các sản phẩm trong giỏ hàng trong giỏ hàng.
         public static int sumMoney() 
         {
             int total = 0;
