@@ -14,7 +14,7 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/Author
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if(AuthorHelper.getIdentity() == null || AuthorHelper.isAdmin(AuthorHelper.getIdentity()))
+            if(AuthorHelper.getIdentity() == null || !AuthorHelper.isAdmin(AuthorHelper.getIdentity()))
             {
                 filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Forbidden");
             }
