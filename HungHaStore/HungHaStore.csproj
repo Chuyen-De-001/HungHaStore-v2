@@ -801,6 +801,7 @@
     <Content Include="App_Data\js-dèault\jquery.validate.unobtrusive.js" />
     <Content Include="App_Data\js-dèault\jquery.validate.unobtrusive.min.js" />
     <Content Include="App_Data\js-dèault\modernizr-2.8.3.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

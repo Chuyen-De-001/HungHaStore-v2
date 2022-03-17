@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
+using PagedList;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
@@ -15,10 +16,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/AInvoice
-        public ActionResult Index()
+        public ActionResult Index(int pageSize = 20, int page = 1)
         {
-            var hoa_don = db.hoa_don.Include(h => h.nguoi_dung);
-            return View(hoa_don.ToList());
+            IEnumerable<hoa_don> hoaDons = db.hoa_don.OrderByDescending(s => s.id).ToPagedList(page, pageSize);
+            return View(hoaDons);
         }
 
         // GET: Admin/AInvoice/Details/5
@@ -34,71 +35,42 @@ namespace HungHaStore.Areas.Admin.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        // GET: Admin/AInvoice/Create
-        public ActionResult Create()
+        public ActionResult Payment(int id)
         {
-            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan");
-            return View();
-        }
 
-        // POST: Admin/AInvoice/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,id_nd,trang_thai,tong_tien,tg_tao")] hoa_don hoa_don)
-        {
-            if (ModelState.IsValid)
-            {
-                db.hoa_don.Add(hoa_don);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan", hoa_don.id_nd);
-            return View(hoa_don);
-        }
-
-        // GET: Admin/AInvoice/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
+            hoa_don hoaDon = db.hoa_don.Find(id);
+            if (hoaDon == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            hoa_don hoa_don = db.hoa_don.Find(id);
-            if (hoa_don == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan", hoa_don.id_nd);
-            return View(hoa_don);
-        }
-
-        // POST: Admin/AInvoice/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,id_nd,trang_thai,tong_tien,tg_tao")] hoa_don hoa_don)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(hoa_don).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.id_nd = new SelectList(db.nguoi_dung, "id", "tai_khoan", hoa_don.id_nd);
-            return View(hoa_don);
+            hoaDon.trang_thai = hoa_don.TRANG_THAI_HOPAN_THANH;
+            db.SaveChanges();
+            HttpContext.Session["typeAlert"] = "success";
+            HttpContext.Session["messageAlert"] = "Cập nhập hóa đơn thành công.";
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/AInvoice/Delete/5
         public ActionResult Delete(int? id)
         {
-            hoa_don hoa_don = db.hoa_don.Find(id);
-            db.hoa_don.Remove(hoa_don);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                hoa_don hoaDon = db.hoa_don.Find(id);
+                if (hoaDon == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                List<chitiet_hd> chiTietHDs = db.chitiet_hd.Where(s => s.id_hd == hoaDon.id).ToList();
+                db.chitiet_hd.RemoveRange(chiTietHDs);
+                db.hoa_don.Remove(hoaDon);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }catch(Exception e)
+            {
+                HttpContext.Session["typeAlert"] = "danger";
+                HttpContext.Session["messageAlert"] = e.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Admin/AInvoice/Delete/5

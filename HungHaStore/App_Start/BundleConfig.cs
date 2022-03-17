@@ -18,7 +18,8 @@ namespace HungHaStore
                         "~/Scripts/popper.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-            "~/Scripts/main.js"));
+            "~/Scripts/main.js", 
+            "~/Scripts/custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.min.js"));

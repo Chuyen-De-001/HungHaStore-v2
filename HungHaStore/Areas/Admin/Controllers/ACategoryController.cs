@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
 using HungHaStore.Helper;
+using PagedList;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
@@ -16,22 +17,15 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/Category
-        public ActionResult Index()
+        public ActionResult Index(int pageSize = 20, int page = 1)
         {
-            if(AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
-            return View(db.loai_sp.ToList());
+            IEnumerable<loai_sp> loaiSPs = db.loai_sp.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+            return View(loaiSPs);
         }
 
         // GET: Admin/Category/Details/5
         public ActionResult Details(int? id)
         {
-            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -47,10 +41,6 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/Category/Create
         public ActionResult Create()
         {
-            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
             return View();
         }
 
@@ -61,10 +51,6 @@ namespace HungHaStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,ten,mo_ta,tg_tao")] loai_sp loai_sp)
         {
-            if (AuthorHelper.getIdentity() == null && AuthorHelper.isAdmin(AuthorHelper.getIdentity()) == false)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
             if (ModelState.IsValid)
             {
                 db.loai_sp.Add(loai_sp);
@@ -126,6 +112,12 @@ namespace HungHaStore.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             loai_sp model = db.loai_sp.Find(id);
+            List<san_pham> sanPhams = db.san_pham.Where(s => s.id_loai_sp == model.id).ToList();
+            foreach(san_pham item in sanPhams)
+            {
+                db.khoes.Remove(item.kho);
+                db.san_pham.Remove(item);
+            }
             db.loai_sp.Remove(model);
             db.SaveChanges();
             HttpContext.Session["typeAlert"] = "success";

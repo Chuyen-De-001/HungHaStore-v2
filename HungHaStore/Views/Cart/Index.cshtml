@@ -34,36 +34,42 @@
                             {
                                 foreach (Cart item in Model)
                                 {
-                                    <tr data-id="@item.id_san_pham">
-                                        <td class="shoping__cart__item">
-                                            @if (item.giam_gia > 0)
-                                            {
-                                                <span class="badge badge-pill badge-danger" style="position:absolute">SALE</span>
-                                            }
-                                            <img src="/Assest/img/product/@item.hinh_anh" alt="@item.ten" height="100px" width="auto">
-                                            <h5>@item.ten</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            @if (item.giam_gia > 0)
-                                            {
-                                                <h5 style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
-                                                <h5 class="text-danger font-weight-bold">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia, item.gia_tien))</h5>
-                                            }
-                                            else
-                                            {
-                                                <h5 class="font-weight-bold">@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
-                                            }
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <span class="font-weight-bold text-dark">@item.so_luong</span>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            @String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia,item.gia_tien))
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
-                                        </td>
-                                    </tr>
+                            <tr data-id="@item.id_san_pham">
+                                <td class="shoping__cart__item">
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <span class="badge badge-pill badge-danger" style="position:absolute">SALE</span>
+                                    }
+                                    <img src="/Assest/img/product/@item.hinh_anh" alt="@item.ten" height="100px" width="auto">
+                                    <h5>@item.ten</h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    @if (item.giam_gia > 0)
+                                    {
+                                        <h5 style="text-decoration:line-through;font-size:80%">@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
+                                        <h5 class="text-danger font-weight-bold">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia, item.gia_tien))</h5>
+                                    }
+                                    else
+                                    {
+                                        <h5 class="font-weight-bold">@String.Format(currency, "{0:c0}", item.gia_tien)</h5>
+                                    }
+                                </td>
+                                <td class="shoping__cart__quantity">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <a class="dec qtybtn">-</a>
+                                            <input type="text" value="@item.so_luong" readonly>
+                                            <a class="inc qtybtn">+</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="shoping__cart__total">
+                                    @String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(item.giam_gia, item.tong))
+                                </td>
+                                <td class="shoping__cart__item__close">
+                                    <span class="icon_close"></span>
+                                </td>
+                            </tr>
                                 }
                             }
                         </tbody>
@@ -102,6 +108,52 @@
     </div>
 </section>
 <script>
+    $(document).on("click", "div.pro-qty .dec", function () {
+        var url = "@Url.Action("Quantity","Ajax")";
+        var id = $(this).closest("tr").attr("data-id");
+        var soluong = parseInt($(this).closest("div").find("input").val()) - 1;
+        $.ajax({
+            url: url,
+            type: "get",
+            data: {
+                id: id,
+                soluong:soluong
+            },
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+                if (response == true) {
+                    location.reload();
+                } else {
+                    alert("Xảy ra lỗi.");
+                }
+            }
+        });
+    })
+
+    $(document).on("click", "div.pro-qty .inc", function () {
+        var url = "@Url.Action("Quantity","Ajax")";
+        var id = $(this).closest("tr").attr("data-id");
+        var soluong = parseInt($(this).closest("div").find("input").val()) + 1;
+        $.ajax({
+            url: url,
+            type: "get",
+            data: {
+                id: id,
+                soluong:soluong
+            },
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+                if (response == true) {
+                    location.reload();
+                } else {
+                    alert("Xảy ra lỗi.");
+                }
+            }
+        });
+    })
+
     $(document).on("click", ".shoping__cart__table .icon_close", function () {
         var tr = $(this).closest("tr");
         var id = tr.attr("data-id");

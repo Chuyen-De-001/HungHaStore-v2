@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HungHaStore.Models.nha_cung_cap>
+﻿@using PagedList.Mvc
+@using HungHaStore.Helper;
+@model PagedList.IPagedList<HungHaStore.Models.nha_cung_cap>
 
 @{
     ViewBag.Title = "Index";
@@ -28,26 +30,34 @@
             <th></th>
         </tr>
     </thead>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ten)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dia_chi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.sdt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dia_chi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sdt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
 
 </table>
+<div class="row pb-5">
+    <div class="col">
+        <div class="pagination justify-content-md-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", "AProvider", new { page }))
+        </div>
+    </div>
+</div>

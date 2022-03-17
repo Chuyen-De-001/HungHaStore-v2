@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
+using PagedList;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
@@ -15,9 +16,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/AUser
-        public ActionResult Index()
+        public ActionResult Index(int pageSize = 20, int page = 1)
         {
-            return View(db.nguoi_dung.ToList());
+            IEnumerable<nguoi_dung> nguoiDungs = db.nguoi_dung.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+            return View(nguoiDungs);
         }
 
         // GET: Admin/AUser/Details/5

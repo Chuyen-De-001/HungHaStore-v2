@@ -23,12 +23,12 @@ namespace HungHaStore.Controllers
         }
 
         //Thêm sản phẩm vào giở hàng.
-        public ActionResult Add(int id)
+        public ActionResult Add(int id,int? soluong)
         {
             var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
             Dictionary<string, string> response = new Dictionary<string, string>();
-            san_pham sanPham = db.san_pham.SqlQuery("select * from san_pham where id = " + id).Single();
-            List<Cart> list = CartHelper.Add(sanPham);
+            san_pham sanPham = db.san_pham.Find(id);
+            List<Cart> list = CartHelper.Add(sanPham,soluong);
             response["count"] = CartHelper.getList().Count().ToString();
             response["sumMoney"] = String.Format(currency, "{0:c0}", CartHelper.sumMoney());
             return Content(JsonConvert.SerializeObject(response));
@@ -63,6 +63,38 @@ namespace HungHaStore.Controllers
             }
             catch (Exception e) { }
             return Content("false");
+        }
+
+
+        //Cập nhập số lượng sản phẩm trong giỏ h
+        public ActionResult Quantity(int id,int soluong)
+        {
+            try
+            {
+                san_pham sanPham = db.san_pham.Find(id);
+                List<Cart> list = CartHelper.getList();
+                if (soluong < 1)
+                {
+                    list.RemoveAll(s => s.id_san_pham == id);
+                    return Content("true");
+                }
+                Cart model = new Cart();
+                foreach (Cart item in list)
+                {
+                    if (item.id_san_pham == sanPham.id)
+                    {
+                        model = item;
+                    }
+                }
+                model.so_luong = soluong;
+                model.tong = soluong * CalculatorHelper.priceSale(sanPham.giam_gia, sanPham.gia_tien);
+                CartHelper.updateOne(model, list);
+                return Content("true");
+            }
+            catch(Exception e)
+            {
+                return Content("false");
+            }
         }
 
     }

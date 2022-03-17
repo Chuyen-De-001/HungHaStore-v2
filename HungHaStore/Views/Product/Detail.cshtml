@@ -59,11 +59,13 @@
                     <div class="product__details__quantity">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <a class="dec qtybtn">-</a>
+                                <input type="text"  value="1" name="soluong" readonly>
+                                <a class="inc qtybtn">+</a>
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">THÊM GIỎ HÀNG</a>
+                    <a href="#" class="primary-btn" name="add_to_card">THÊM GIỎ HÀNG</a>
                     @if (Model.kho == null || Model.kho.so_luong == 0)
                     {
                         <div class="mt-5 p-5 border">
@@ -143,6 +145,18 @@
     </div>
 </section>
 <script>
+    $(document).on("click", "div.pro-qty .dec", function () {
+        var input = $("input[name=soluong]");
+        var soluong = input.val();
+        input.val(parseInt(soluong) - 1 < 1 ? 1 : parseInt(soluong) - 1);
+    })
+
+    $(document).on("click", "div.pro-qty .inc", function () {
+        var input = $("input[name=soluong]");
+        var soluong = input.val();
+        input.val(parseInt(soluong) + 1);
+    })
+
     $(document).on("click", "#order-submit", function () {
         $.ajax({
             url: "@Url.Action("Order","Ajax")",
@@ -161,4 +175,61 @@
             }
         });
     });
+
+    $('a[name=add_to_card]').on('click', function () {
+            var cart = $('#shopping-cart');
+        var imgtodrag = $('.product__details__pic__item').find('img').eq(0);
+        console.log(imgtodrag);
+            if (imgtodrag) {
+                var imgclone = imgtodrag.clone()
+                    .offset({
+                        top: imgtodrag.offset().top,
+                        left: imgtodrag.offset().left
+                    })
+                    .css({
+                        'opacity': '0.8',
+                        'position': 'absolute',
+                        'height': '150px',
+                        'width': '150px',
+                        'z-index': '100'
+                    })
+                    .appendTo($('body'))
+                    .animate({
+                        'top': cart.offset().top + 10,
+                        'left': cart.offset().left + 10,
+                        'width': 75,
+                        'height': 75
+                    }, 1000, 'easeInOutExpo');
+
+                setTimeout(function () {
+                    cart.effect("shake", {
+                        times: 2
+                    }, 500);
+                }, 1500);
+                imgclone.animate({
+                    'width': 0,
+                    'height': 0
+                }, function () {
+                    $(this).detach()
+                });
+            }
+            var id = @Model.id;
+            var url = "@Url.Action("Add", "Ajax")";
+            var soluong = $("input[name=soluong]").val();
+            $.ajax({
+                url: url,
+                type: "get",
+                data: {
+                    id: id,
+                    soluong: soluong,
+                },
+                dataType:'json',
+                success: function (response) {
+                    $("#count_cart").html(response.count);
+                    $("#sum_money").html(response.sumMoney);
+                }
+            });
+        });
+
+
 </script>

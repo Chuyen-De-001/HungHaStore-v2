@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
+using PagedList;
 
 namespace HungHaStore.Areas.Admin.Controllers
 {
@@ -15,9 +16,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/AProvider
-        public ActionResult Index()
+        public ActionResult Index(int pageSize = 20, int page = 1)
         {
-            return View(db.nha_cung_cap.ToList());
+            IEnumerable<nha_cung_cap> nhaCungCaps = db.nha_cung_cap.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+            return View(nhaCungCaps);
         }
 
         // GET: Admin/AProvider/Details/5

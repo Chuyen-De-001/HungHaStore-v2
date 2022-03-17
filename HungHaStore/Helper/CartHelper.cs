@@ -10,7 +10,7 @@ namespace HungHaStore.Helper
     {
         public static Model1 db = new Model1();
         //Thêm sản phẩm vào giỏ hàng.
-        public static List<Cart> Add(san_pham sanPham)
+        public static List<Cart> Add(san_pham sanPham,int? soluong)
         {
             List<Cart> list = CartHelper.getList();
             var cart = new Cart();
@@ -19,14 +19,28 @@ namespace HungHaStore.Helper
             cart.ten = sanPham.ten;
             cart.giam_gia = sanPham.giam_gia;
             cart.gia_tien = CalculatorHelper.priceSale(cart.giam_gia,sanPham.gia_tien);
-            cart.so_luong = 1;
-            cart.tong = cart.so_luong * cart.gia_tien;
+            if(soluong == null)
+            {
+                cart.so_luong = 1;
+            }
+            else
+            {
+                cart.so_luong = (int)soluong;
+            }
+            cart.tong = cart.so_luong * CalculatorHelper.priceSale(sanPham.giam_gia, sanPham.gia_tien);
 
             Cart model = CartHelper.isExist(cart, list); //Kiểm tra sản phẩm tồn tại trong giỏ hàng.
             if (model != null)
             {
-                model.so_luong = model.so_luong + 1;
-                model.tong = model.so_luong * model.gia_tien;
+                if(soluong == null)
+                {
+                    model.so_luong = model.so_luong + 1;
+                }
+                else
+                {
+                    model.so_luong = (int)(model.so_luong + soluong);
+                }
+                model.tong = model.so_luong * CalculatorHelper.priceSale(model.giam_gia, model.gia_tien);
                 CartHelper.updateOne(model, list);
             }
             else
@@ -35,6 +49,11 @@ namespace HungHaStore.Helper
             }
             CartHelper.setList(list);
             return list;
+        }
+
+        internal static List<Cart> Add(san_pham sanPham)
+        {
+            throw new NotImplementedException();
         }
 
         // Kiểm tra sản phẩm đã có ở trong giỏ hàng.
@@ -75,7 +94,7 @@ namespace HungHaStore.Helper
                 if (list == null) { return 0; }
                 foreach (Cart item in list)
                 {
-                    total = total + CalculatorHelper.priceSale(item.giam_gia, item.gia_tien);
+                    total = total + item.tong;
                 }
             }
             catch { }

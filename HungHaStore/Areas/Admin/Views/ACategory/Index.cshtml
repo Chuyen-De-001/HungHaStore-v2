@@ -1,5 +1,5 @@
-﻿@model IEnumerable<HungHaStore.Models.loai_sp>
-
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<HungHaStore.Models.loai_sp>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -23,21 +23,29 @@
             <th></th>
         </tr>
     </thead>
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.ten)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.mo_ta)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.tg_tao)
-    </td>
-    <td>
-        <a class="btn btn-warning" href="@Url.Action("Edit","ACategory",new { id= item.id})">Sửa</a>
-        <a class="btn btn-danger" href="@Url.Action("Delete","ACategory",new { id= item.id})" data-confirm="Chắc chắn xóa? Nếu xóa danh mục sẽ xóa tất cả những sản phẩm trong danh mục đó">Xóa</a>
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mo_ta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tg_tao)
+            </td>
+            <td>
+                <a class="btn btn-warning" href="@Url.Action("Edit","ACategory",new { id= item.id})">Sửa</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete","ACategory",new { id= item.id})" data-confirm="Khi xóa danh mục sản phảm thì sẽ xóa tất cả các sản phẩm trong danh mục này. Chắc chắn xóa?">Xóa</a>
+            </td>
+        </tr>
+    }
 </table>
+<div class="row pb-5">
+    <div class="col">
+        <div class="pagination justify-content-md-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", "ACategory", new { page }))
+        </div>
+    </div>
+</div>

@@ -19,7 +19,7 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Index(int pageSize = 20,int page = 1)
         {
-            var san_pham = db.san_pham.Include(s => s.kho).Include(s => s.loai_sp).Include(s => s.nha_cung_cap);
+            //var san_pham = db.san_pham.Include(s => s.kho).Include(s => s.loai_sp).Include(s => s.nha_cung_cap);
             IEnumerable<san_pham> model = db.san_pham.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
             return View(model);
         }
@@ -59,6 +59,7 @@ namespace HungHaStore.Areas.Admin.Controllers
         public ActionResult Create([Bind(Include = "ten,id_loai_sp,gia_tien,giam_gia,mo_ta,id_kho,id_ncc,hinh_anh,luot_xem,tg_tao")] san_pham san_pham, HttpPostedFileBase fileImg)
         {
             DateTime date = DateTime.Now;
+            Random rnd = new Random();
             san_pham.tg_tao = date;
             if (fileImg != null && fileImg.ContentLength > 0)
             {
@@ -68,8 +69,15 @@ namespace HungHaStore.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+                kho kho = new kho();
+                kho.so_luong = 0;
+                db.khoes.Add(kho);
+                db.SaveChanges();
+                san_pham.id_kho = kho.id;
                 db.san_pham.Add(san_pham);
                 db.SaveChanges();
+                HttpContext.Session["typeAlert"] = "success";
+                HttpContext.Session["messageAlert"] = "Tạo danh sản phẩm thanh công";
                 return RedirectToAction("Index");
             }
             ViewBag.id_kho = new SelectList(db.khoes, "id", "id", san_pham.id_kho);
@@ -127,6 +135,7 @@ namespace HungHaStore.Areas.Admin.Controllers
         public ActionResult Delete(int? id)
         {
             san_pham san_pham = db.san_pham.Find(id);
+            db.khoes.Remove(san_pham.kho);
             db.san_pham.Remove(san_pham);
             db.SaveChanges();
             HttpContext.Session["typeAlert"] = "success";

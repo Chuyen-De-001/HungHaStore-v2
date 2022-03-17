@@ -1,5 +1,7 @@
-﻿@using HungHaStore.Models;
-@model IEnumerable<HungHaStore.Models.hoa_don>
+﻿@using PagedList.Mvc
+@using HungHaStore.Helper;
+@using HungHaStore.Models;
+@model PagedList.IPagedList<HungHaStore.Models.hoa_don>
 
 @{
     ViewBag.Title = "Index";
@@ -28,32 +30,40 @@
         </tr>
     </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nguoi_dung.tai_khoan)
-        </td>
-        <td>
-            @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
-            {
-                <span class="font-weight-bold text-warning">Đang xử lý</span>
-            }
-            else
-            {
-                <span class="font-weight-bold text-success">Hoàn thành</span>
-            }
-        </td>
-        <td>
-            @String.Format(currency, "{0:c0}", item.tong_tien)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tg_tao)
-        </td>
-        <td>
-            <a class="btn btn-warning" href="@Url.Action("Details","AInvoice",new { id= item.id})">Chi tiết</a>
-            <a class="btn btn-danger" href="@Url.Action("Delete","AInvoice",new { id= item.id})" data-confirm="Chắc chắn xóa? Nếu xóa danh mục sẽ xóa tất cả những sản phẩm trong danh mục đó">Xóa</a>
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nguoi_dung.tai_khoan)
+            </td>
+            <td>
+                @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                {
+                    <span class="font-weight-bold text-warning">Đang xử lý</span>
+                }
+                else
+                {
+                    <span class="font-weight-bold text-success">Hoàn thành</span>
+                }
+            </td>
+            <td>
+                @String.Format(currency, "{0:c0}", item.tong_tien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tg_tao)
+            </td>
+            <td>
+                <a class="btn btn-warning" href="@Url.Action("Details","AInvoice",new { id= item.id})">Chi tiết</a>
+                <a class="btn btn-success" href="@Url.Action("Payment","AInvoice",new { id= item.id})">Thanh toán</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete","AInvoice",new { id= item.id})" data-confirm="Chắc chắn xóa? Nếu xóa danh mục sẽ xóa tất cả những sản phẩm trong danh mục đó">Xóa</a>
+            </td>
+        </tr>
+    }
 </table>
+<div class="row pb-5">
+    <div class="col">
+        <div class="pagination justify-content-md-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", "AProduct", new { page }))
+        </div>
+    </div>
+</div>
