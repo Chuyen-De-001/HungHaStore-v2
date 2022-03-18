@@ -115,8 +115,11 @@ namespace HungHaStore.Areas.Admin.Controllers
             List<san_pham> sanPhams = db.san_pham.Where(s => s.id_loai_sp == model.id).ToList();
             foreach(san_pham item in sanPhams)
             {
-                db.khoes.Remove(item.kho);
+                kho kho = item.kho;
                 db.san_pham.Remove(item);
+                db.SaveChanges();
+                db.khoes.Remove(kho);
+                db.SaveChanges();
             }
             db.loai_sp.Remove(model);
             db.SaveChanges();

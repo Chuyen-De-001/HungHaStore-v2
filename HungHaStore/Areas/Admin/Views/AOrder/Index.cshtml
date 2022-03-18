@@ -1,0 +1,47 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<HungHaStore.Models.dat_hang>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đặt hàng</h2>
+<br />
+<table class="table table-striped border">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Tên Sản Phẩm
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Thời gian đặt 
+            </th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.san_pham.ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tg_tao)
+            </td>
+        </tr>
+    }
+
+</table><div class="row pb-5">
+    <div class="col">
+        <div class="pagination justify-content-md-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", "AOder", new { page }))
+        </div>
+    </div>
+</div>

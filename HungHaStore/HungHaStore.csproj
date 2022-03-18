@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ACategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\AInvoiceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AOrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\AProviderController.cs" />
     <Compile Include="Areas\Admin\Controllers\AUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\AuthorController.cs" />
@@ -872,6 +873,7 @@
     <Content Include="Areas\Admin\Views\AProvider\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AProvider\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AProvider\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AOrder\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="App_Data\js-dèault\jquery-3.4.1.slim.min.map" />
     <Content Include="App_Data\js-dèault\jquery-3.4.1.min.map" />

@@ -25,10 +25,38 @@ select * from san_pham where ten = N'K? ?? sách báo g? MDF ph? melamine GHS-2397
 
 
 
+
+
+
 USE [hung_ha_store]
 GO
 
 UPDATE [dbo].[san_pham]
-   SET [luot_xem] = <luot_xem, int,>
- WHERE id = 5
+   SET id_kho = 674
+ WHERE id = 225
+
+
+
+ USE [hung_ha_store]
+GO
+
+INSERT INTO [dbo].[kho]
+           ([so_luong])
+     VALUES(0)
+         
+GO
+
+
+
+
+
+
+ USE [hung_ha_store]
+GO
+
+DELETE FROM [dbo].[san_pham]
+      WHERE id = 223
+GO
+
+
 
