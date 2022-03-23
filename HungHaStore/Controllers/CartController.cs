@@ -59,6 +59,7 @@ namespace HungHaStore.Controllers
                     invoiceDetail.id_hd = invoice.id;
                     invoiceDetail.id_sp = item.id_san_pham;
                     invoiceDetail.so_luong = item.so_luong;
+                    invoiceDetail.ten_sp = item.ten;
                     invoiceDetail.gia_tien = CalculatorHelper.priceSale(item.giam_gia,item.gia_tien);
                     db.chitiet_hd.Add(invoiceDetail);
                     db.SaveChanges();
