@@ -7,18 +7,26 @@
     List<chitiet_hd> chiTietHDs = ViewBag.chiTietHDs;
 }
 <div class="container">
+    <a href="@Url.Action("Index")" class="btn btn-outline-info mb-3">< Quay lại</a>
     <div class="row">
         <div class="col-12">
-            <a href="@Url.Action("Index")" class="btn btn-outline-info">< Quay lại</a>
-            <br>
             <div class="card">
                 <div class="card-body p-0">
-                    <div class="row p-3">
-                        <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 p-5">
                             <img src="/Assest/img/logo.png">
                         </div>
+                    </div>
+                    <hr />
+                    <div class="row p-3">
+                        <div class="col-md-6">
+                            <h6 class="mb-3"><b>Thông tin nhận hàng</b></h6>
+                            <p class="m-0">@Model.ten_nguoi_nhan</p>
+                            <p class="m-0">@Model.sdt_nhan</p>
+                            <p class="m-0">@Model.dia_chi_nhan</p>
+                        </div>
                         <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-1">Invoice #@Model.id</p>
+                            <p class="font-weight-bold mb-1">Hóa đơn #@Model.id</p>
                             <p class="text-muted">@Model.tg_tao.ToString("yyyy/MM/dd")</p>
                             @if (Model.trang_thai == hoa_don.TRANG_THAI_XU_LY)
                             {
@@ -43,24 +51,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (chiTietHDs.Count != null)
+                                    @foreach (chitiet_hd item in chiTietHDs)
                                     {
-                                        foreach (chitiet_hd item in chiTietHDs)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @item.san_pham.ten
-                                                </td>
-                                                <td>@item.so_luong</td>
-                                                <td>@item.gia_tien</td>
-                                                <td>
-                                                    @{int tong_tien = item.so_luong * item.gia_tien;}
-                                                    @String.Format(currency, "{0:c0}", tong_tien)
-                                                </td>
-                                            </tr>
-                                        }
+                                        <tr>
+                                            <td>
+                                                @item.ten_sp
+                                            </td>
+                                            <td>@item.so_luong</td>
+                                            <td>@String.Format(currency, "{0:c0}", item.gia_tien)</td>
+                                            <td>@{int tong_tien = item.so_luong * item.gia_tien;} @String.Format(currency, "{0:c0}", tong_tien)</td>
+                                        </tr>
                                     }
-
 
                                 </tbody>
                             </table>

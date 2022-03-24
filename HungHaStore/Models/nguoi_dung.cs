@@ -41,6 +41,10 @@
         public string sdt { get; set; }
 
         [StringLength(255)]
+        [DisplayName("Họ và tên")]
+        public string ho_ten { get; set; }
+
+        [StringLength(255)]
         [DisplayName("Địa chỉ")]
         public string dia_chi { get; set; }
 

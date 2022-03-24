@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Helper;
@@ -24,16 +25,38 @@ namespace HungHaStore.Controllers
         public ActionResult Checkout(int id)
         {
             hoa_don hoaDon = db.hoa_don.Where(s => s.id == id).SingleOrDefault();
-            if(hoaDon != null)
+            nguoi_dung nguoiDung = AuthorHelper.getIdentity();
+            if (nguoiDung == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            if (hoaDon != null)
             {
                 List<chitiet_hd> chiTietHDs = db.chitiet_hd.Where(s => s.id_hd == id).ToList();
                 ViewBag.chiTietHDs = chiTietHDs;
+                ViewBag.nguoiDung = nguoiDung;
                 return View(hoaDon);
             }
             return RedirectToAction("Index","Home");
         }
 
-        public ActionResult CreateInvoice()
+
+        //Form nhập thông tin nhận hàng.
+        public ActionResult OrderInfo()
+        {
+            List<Cart> list = CartHelper.getList();
+            nguoi_dung nguoiDung = AuthorHelper.getIdentity();
+            if(nguoiDung == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            ViewBag.nguoiDung = nguoiDung;
+            return View(list);
+        }
+
+
+        //Tạo HD đơn.
+        public ActionResult CreateInvoice(string ten_nguoi_nhan,string sdt_nhan,string dia_chi_nhan)
         {
             DateTime date = DateTime.Now;
             nguoi_dung identity = AuthorHelper.getIdentity();
@@ -50,6 +73,9 @@ namespace HungHaStore.Controllers
                 invoice.id_nd = AuthorHelper.getIdentity().id;
                 invoice.trang_thai = hoa_don.TRANG_THAI_XU_LY;
                 invoice.tong_tien = CartHelper.sumMoney();
+                invoice.ten_nguoi_nhan = ten_nguoi_nhan;
+                invoice.dia_chi_nhan = dia_chi_nhan;
+                invoice.sdt_nhan = sdt_nhan;
                 invoice.tg_tao = date;
                 db.hoa_don.Add(invoice);
                 db.SaveChanges();
@@ -65,6 +91,8 @@ namespace HungHaStore.Controllers
                     db.SaveChanges();
                 }
                 CartHelper.setList(null);
+                HttpContext.Session["typeAlert"] = "success";
+                HttpContext.Session["messageAlert"] = "Tạo hóa đơn thành công, chờ để được xử lý.";
                 return RedirectToAction("Checkout", "Cart", new { id = invoice.id });
             }
             HttpContext.Session["typeAlert"] = "danger";

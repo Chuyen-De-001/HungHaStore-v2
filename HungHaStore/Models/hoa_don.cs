@@ -23,6 +23,12 @@ namespace HungHaStore.Models
 
         public int trang_thai { get; set; }
 
+        public string ten_nguoi_nhan { get; set; }
+
+        public string dia_chi_nhan { get; set; }
+
+        public string sdt_nhan { get; set; }
+
         public int tong_tien { get; set; }
 
         [Column(TypeName = "date")]

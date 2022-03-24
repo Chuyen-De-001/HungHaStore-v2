@@ -7,13 +7,12 @@
 }
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-
 <div class="form-horizontal">
     <h4>Kho hàng</h4>
     <br />
-    <p><label class="control-label col-md-2"><a href="@Url.Action("Edit", "AStore", new { id=sanPham.id })"><b>Quay lại</b></a></label></p>
+    <p><label class="control-label col-md-2"><a href="@Url.Action("Edit", "AProduct", new { id=sanPham.id })" class="btn btn-info"><b> < Quay lại</b></a></label></p>
     <hr />
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.id)
 
@@ -35,7 +34,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="submit" value="Lưu" class="btn btn-success" />
         </div>
     </div>
 </div>

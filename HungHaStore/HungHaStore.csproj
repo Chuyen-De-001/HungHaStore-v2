@@ -844,6 +844,7 @@
     <Content Include="Views\Home\ListInvoice.cshtml" />
     <Content Include="Views\Home\Profire.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Cart\OrderInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />

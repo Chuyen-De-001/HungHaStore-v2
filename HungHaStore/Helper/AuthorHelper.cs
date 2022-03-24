@@ -18,13 +18,17 @@ namespace HungHaStore.Helper
         {
             try
             {
-                nguoi_dung nguoidung = (nguoi_dung)HttpContext.Current.Session["loginSesstion"];
-                return nguoidung;
+                nguoi_dung session = (nguoi_dung)HttpContext.Current.Session["loginSesstion"];
+                if(session != null)
+                {
+                    nguoi_dung nguoiDung = db.nguoi_dung.Find(session.id);
+                    return nguoiDung;
+                }
+
             }
             catch
-            {
-                return null;
-            }
+            {}
+            return null;
         }
 
         public static void removeIdentity()
