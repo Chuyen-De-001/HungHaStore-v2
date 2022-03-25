@@ -7,78 +7,83 @@
     List<chitiet_hd> chiTietHDs = ViewBag.chiTietHDs;
 }
 <div class="container">
-    <a href="@Url.Action("Index")" class="btn btn-outline-info mb-3">< Quay lại</a>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="row">
-                        <div class="col-md-12 p-5">
-                            <img src="/Assest/img/logo.png">
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="row p-3">
-                        <div class="col-md-6">
-                            <h6 class="mb-3"><b>Thông tin nhận hàng</b></h6>
-                            <p class="m-0">@Model.ten_nguoi_nhan</p>
-                            <p class="m-0">@Model.sdt_nhan</p>
-                            <p class="m-0">@Model.dia_chi_nhan</p>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-1">Hóa đơn #@Model.id</p>
-                            <p class="text-muted">@Model.tg_tao.ToString("yyyy/MM/dd")</p>
-                            @if (Model.trang_thai == hoa_don.TRANG_THAI_XU_LY)
-                            {
-                                <p class="text-warning font-weight-bold">Đang xử lý</p>
-                            }
-                            else
-                            {
-                                <p class="text-success font-weight-bold">Thanh toán thành công</p>
-                            }
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row p-5">
-                        <div class="col-md-12">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Sản phẩm</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Số lương</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Đơn giá</th>
-                                        <th class="border-0 text-uppercase small font-weight-bold">Thành tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (chitiet_hd item in chiTietHDs)
+    <div class="card">
+        <div class="card-header">
+            <b>THÔNG TIN HÓA ĐƠN</b>
+            <a href="@Url.Action("Index")" class="btn btn-secondary pull-right">< Quay lại</a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="row">
+                                <div class="col-md-12 p-5">
+                                    <img src="/Assest/img/logo.png">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row p-3">
+                                <div class="col-md-6">
+                                    <h6 class="mb-3"><b>Thông tin nhận hàng</b></h6>
+                                    <p class="m-0">@Model.ten_nguoi_nhan</p>
+                                    <p class="m-0">@Model.sdt_nhan</p>
+                                    <p class="m-0">@Model.dia_chi_nhan</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <p class="font-weight-bold mb-1">Hóa đơn #@Model.id</p>
+                                    <p class="text-muted">@Model.tg_tao.ToString("yyyy/MM/dd")</p>
+                                    @if (Model.trang_thai == hoa_don.TRANG_THAI_XU_LY)
                                     {
-                                        <tr>
-                                            <td>
-                                                @item.ten_sp
-                                            </td>
-                                            <td>@item.so_luong</td>
-                                            <td>@String.Format(currency, "{0:c0}", item.gia_tien)</td>
-                                            <td>@{int tong_tien = item.so_luong * item.gia_tien;} @String.Format(currency, "{0:c0}", tong_tien)</td>
-                                        </tr>
+                                        <p class="text-warning font-weight-bold">Đang xử lý</p>
+                                        <a href="@Url.Action("Payment","AInvoice",new { id=Model.id})" class="btn btn-success">Xác nhân thành công</a>
                                     }
+                                    else
+                                    {
+                                        <p class="text-success font-weight-bold">Thanh toán thành công</p>
+                                    }
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row p-5">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Sản phẩm</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Số lương</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Đơn giá</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (chitiet_hd item in chiTietHDs)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.ten_sp
+                                                    </td>
+                                                    <td>@item.so_luong</td>
+                                                    <td>@String.Format(currency, "{0:c0}", item.gia_tien)</td>
+                                                    <td>@{int tong_tien = item.so_luong * item.gia_tien;} @String.Format(currency, "{0:c0}", tong_tien)</td>
+                                                </tr>
+                                            }
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                    <div class="d-flex flex-row-reverse bg-dark text-white p-4">
-                        <div class="py-3 px-5 text-right">
-                            <div class="mb-2">Thành tiền</div>
-                            <div class="h2 font-weight-light">@String.Format(currency, "{0:c0}", Model.tong_tien)</div>
+                            <div class="d-flex flex-row-reverse bg-dark text-white p-4">
+                                <div class="py-3 px-5 text-right">
+                                    <div class="mb-2">Thành tiền</div>
+                                    <div class="h2 font-weight-light">@String.Format(currency, "{0:c0}", Model.tong_tien)</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="text-light mt-5 mb-5 text-center small">by : <a class="text-light" target="_blank" href="http://totoprayogo.com">totoprayogo.com</a></div>
-
 </div>

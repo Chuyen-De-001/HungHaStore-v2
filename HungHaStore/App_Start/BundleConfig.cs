@@ -15,6 +15,8 @@ namespace HungHaStore
                         "~/Scripts/mixitup.min.js",
                         "~/Scripts/owl.carousel.min.js",
                         "~/Scripts/main.js",
+                        "~/Scripts/moment.min.js",
+                        "~/Scripts/daterangepicker.min.js",
                         "~/Scripts/popper.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
@@ -28,10 +30,10 @@ namespace HungHaStore
                       "~/Content/bootstrap.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/elegant-icons.css",
-                      //"~/Content/nice-select.css",
                       "~/Content/jquery-ui.min.css",
                       "~/Content/owl.carousel.min.css",
                       "~/Content/slicknav.min.css",
+                      "~/Content/daterangepicker.css",
                       "~/Content/style.css",
                       "~/Content/custom.css"));
 

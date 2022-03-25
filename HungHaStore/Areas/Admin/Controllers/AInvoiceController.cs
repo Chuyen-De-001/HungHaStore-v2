@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,9 +17,23 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/AInvoice
-        public ActionResult Index(int pageSize = 20, int page = 1)
+        public ActionResult Index(int pageSize = 20, int page = 1,string search = "",string daterange = "")
         {
-            IEnumerable<hoa_don> hoaDons = db.hoa_don.OrderByDescending(s => s.id).ToPagedList(page, pageSize);
+            var query = db.hoa_don.OrderByDescending(s => s.id);
+            if(search != "")
+            {
+                query = (IOrderedQueryable<hoa_don>)query.Where(s => s.ten_nguoi_nhan.Contains(search) || s.sdt_nhan.Contains(search));
+            }
+            if(daterange != "")
+            {
+                string[] date = daterange.Split('-');
+                DateTime dateStart = DateTime.ParseExact(date[0].Trim(), "yyyy/MM/dd", null);
+                DateTime dateEnd = DateTime.ParseExact(date[1].Trim(), "yyyy/MM/dd", null);
+                query = (IOrderedQueryable<hoa_don>)query.Where(s => s.tg_tao >= dateStart && s.tg_tao <= dateEnd);
+            }
+            IEnumerable<hoa_don> hoaDons = query.ToPagedList(page, pageSize);
+            ViewBag.search = search;
+            ViewBag.daterange = daterange;
             return View(hoaDons);
         }
 
@@ -64,6 +79,8 @@ namespace HungHaStore.Areas.Admin.Controllers
                 db.chitiet_hd.RemoveRange(chiTietHDs);
                 db.hoa_don.Remove(hoaDon);
                 db.SaveChanges();
+                HttpContext.Session["typeAlert"] = "danger";
+                HttpContext.Session["messageAlert"] = "Xóa hóa đơn thành công.";
                 return RedirectToAction("Index");
             }catch(Exception e)
             {

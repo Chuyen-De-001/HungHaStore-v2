@@ -27,7 +27,7 @@
                             <p class="m-0">@Model.dia_chi_nhan</p>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p class="font-weight-bold mb-1">Hóa đơn #@Model.id</p>
+                            <p class="font-weight-bold mb-1">Mã HĐ #@Model.id</p>
                             <p class="text-muted">@Model.tg_tao.ToString("yyyy/MM/dd")</p>
                             @if (Model.trang_thai == hoa_don.TRANG_THAI_XU_LY)
                             {
@@ -37,6 +37,17 @@
                             {
                                 <p class="text-success font-weight-bold">Thanh toán thành công</p>
                             }
+                            <p>
+                                Phương thức thanh toán:
+                                @if(Model.phuong_thuc == hoa_don.THANH_TOAN_COD)
+                                {
+                                    <b>Ship COD</b>
+                                }
+                                else
+                                {
+                                    <b>Online</b>
+                                }
+                            </p>
                         </div>
                     </div>
                     <hr>

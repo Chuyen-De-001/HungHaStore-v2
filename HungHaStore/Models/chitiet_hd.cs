@@ -18,6 +18,8 @@ namespace HungHaStore.Models
 
         public int so_luong { get; set; }
 
+        [Required]
+        [StringLength(255)]
         public string ten_sp { get; set; }
 
         public virtual hoa_don hoa_don { get; set; }

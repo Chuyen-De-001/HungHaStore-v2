@@ -66,23 +66,19 @@ ADD COLUMN ten NVARCHAR(255) NULL after email;
 ALTER TABLE [dbo].[nguoi_dung]
 ADD ho_ten VARCHAR (255) NULL;
 
-USE [hung_ha_store]
-GO
 
 DELETE FROM [dbo].[chitiet_hd]
 
 DELETE FROM [dbo].[hoa_don]
 
 
-
-
-ALTER TABLE [dbo].[nguoi_dung]
-ADD ho_ten VARCHAR (255) NULL;
+ALTER TABLE [dbo].[hoa_don]
+ADD ten_nguoi_nhan VARCHAR (255) NOT NULL;
 
 ALTER TABLE [dbo].[nguoi_dung]
-ADD ho_ten VARCHAR (255) NULL;
+ADD dia_chi_nhan VARCHAR (255) NOT NULL;
 
 ALTER TABLE [dbo].[nguoi_dung]
-ADD ho_ten VARCHAR (255) NULL;
+ADD sdt_nhan VARCHAR (255) NOT NULL;
 
 

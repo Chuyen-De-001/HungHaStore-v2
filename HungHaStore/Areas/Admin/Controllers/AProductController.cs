@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,10 +19,15 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/Product
-        public ActionResult Index(int pageSize = 20,int page = 1)
+        public ActionResult Index(int pageSize = 20,int page = 1,string search="")
         {
-            //var san_pham = db.san_pham.Include(s => s.kho).Include(s => s.loai_sp).Include(s => s.nha_cung_cap);
-            IEnumerable<san_pham> model = db.san_pham.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+            var query = db.san_pham.OrderByDescending(s => s.id);
+            if(search != "")
+            {
+             query = (IOrderedQueryable<san_pham>)query.Where(s => s.ten.Contains(search));
+            }
+            IEnumerable<san_pham> model = query.ToPagedList(page, pageSize);
+            ViewBag.search = search;
             return View(model);
         }
 

@@ -507,6 +507,8 @@
     <Content Include="Assest\img\latest-product\lp-3.jpg" />
     <Content Include="Assest\img\logo.png" />
     <Content Include="Assest\img\payment-item.png" />
+    <Content Include="Assest\img\payment\payment_cod.jpg" />
+    <Content Include="Assest\img\payment\payment_online.jpg" />
     <Content Include="Assest\img\product\anh.jpg" />
     <Content Include="Assest\img\product\avar-2-300x300.jpg" />
     <Content Include="Assest\img\product\avar-7-300x300.jpg" />
@@ -750,6 +752,7 @@
     <Content Include="Content\slicknav.min.css" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\daterangepicker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\ElegantIcons.svg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -803,6 +806,8 @@
     <Content Include="App_Data\js-dèault\jquery.validate.unobtrusive.min.js" />
     <Content Include="App_Data\js-dèault\modernizr-2.8.3.js" />
     <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\daterangepicker.min.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

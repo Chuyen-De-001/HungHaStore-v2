@@ -7,56 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Models;
+using HungHaStore.Helper;
 
 namespace HungHaStore.Controllers
 {
     public class ProfileController : Controller
     {
         private Model1 db = new Model1();
-
-        // GET: Profile
-        public ActionResult Index()
-        {
-            return View(db.nguoi_dung.ToList());
-        }
-
-        // GET: Profile/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            if (nguoi_dung == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nguoi_dung);
-        }
-
-        // GET: Profile/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Profile/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,tai_khoan,mat_khau,email,ngay_sinh,sdt,dia_chi,gioi_tinh,quyen,tg_tao")] nguoi_dung nguoi_dung)
-        {
-            if (ModelState.IsValid)
-            {
-                db.nguoi_dung.Add(nguoi_dung);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(nguoi_dung);
-        }
 
         // GET: Profile/Edit/5
         public ActionResult Edit(int? id)
@@ -78,41 +35,19 @@ namespace HungHaStore.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,tai_khoan,mat_khau,email,ngay_sinh,sdt,dia_chi,gioi_tinh,quyen,tg_tao")] nguoi_dung nguoi_dung)
+        public ActionResult Edit([Bind(Include = "id,tai_khoan,mat_khau,email,ngay_sinh,sdt,ho_ten,dia_chi,gioi_tinh,tg_tao")] nguoi_dung nguoi_dung)
         {
             if (ModelState.IsValid)
             {
+                nguoi_dung identity = AuthorHelper.getIdentity();
+                nguoi_dung.quyen = identity.quyen;
                 db.Entry(nguoi_dung).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                HttpContext.Session["typeAlert"] = "success";
+                HttpContext.Session["messageAlert"] = "Cập nhập thông tin tài khoản thành công.";
+                return RedirectToAction("Edit", new { id = nguoi_dung.id });
             }
             return View(nguoi_dung);
-        }
-
-        // GET: Profile/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            if (nguoi_dung == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nguoi_dung);
-        }
-
-        // POST: Profile/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            db.nguoi_dung.Remove(nguoi_dung);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

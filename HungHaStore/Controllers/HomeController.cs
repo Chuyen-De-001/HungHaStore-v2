@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using HungHaStore.Helper;
 using System.Net;
 using System.Data.Entity;
+using PagedList;
 
 namespace HungHaStore.Controllers
 {
@@ -15,6 +16,14 @@ namespace HungHaStore.Controllers
         public static Model1 db = new Model1();
         public ActionResult Index()
         {
+            string daterange = "2022/03/26 - 2022/03/26";
+            var query = db.hoa_don.OrderByDescending(s => s.id);
+            string[] date = daterange.Split('-');
+            DateTime dateStart = DateTime.ParseExact(date[0].Trim(), "yyyy/MM/dd", null);
+            DateTime dateEnd = DateTime.ParseExact(date[1].Trim(), "yyyy/MM/dd", null);
+            query = (IOrderedQueryable<hoa_don>)query.Where(s => s.tg_tao > dateStart && s.tg_tao < dateEnd);
+            IEnumerable<hoa_don> hoaDons = query.ToPagedList(1, 10);
+
             // lấy dữ liệu từ database
             var loaiSanPham = db.loai_sp.SqlQuery("select * from loai_sp").ToList(); 
             var sanPhamNoiBat = db.san_pham.SqlQuery("select TOP 16 * from san_pham ").ToList(); 

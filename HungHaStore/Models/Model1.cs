@@ -47,9 +47,8 @@ namespace HungHaStore.Models
 
             modelBuilder.Entity<nguoi_dung>()
                 .HasMany(e => e.hoa_don)
-                .WithRequired(e => e.nguoi_dung)
-                .HasForeignKey(e => e.id_nd)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.nguoi_dung)
+                .HasForeignKey(e => e.id_nd);
 
             modelBuilder.Entity<nha_cung_cap>()
                 .HasMany(e => e.san_pham)

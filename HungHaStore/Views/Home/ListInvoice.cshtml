@@ -6,45 +6,54 @@
 }
 
 <div class="container">
-    <h2 class="mb-5">Hóa đơn</h2>
-    <table class="table">
-        <tr>
-            <th>
-                Trạng thái
-            </th>
-            <th>
-                Tổng tiền
-            </th>
-            <th>
-                Thời gian tạo
-            </th>
-            <th>Hành động</th>
-        </tr>
+    <div class="card">
+        <div class="card-header">
+            <b>HÓA ĐƠN</b>
+            <a href="@Url.Action("Index","Home")" class="btn btn-secondary pull-right">< Quay lại</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th>
+                            Tổng tiền
+                        </th>
+                        <th>
+                            Thời gian tạo
+                        </th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                            {
+                                <p class="text-warning font-weight-bold">Đang xử lý</p>
+                            }
+                            else
+                            {
+                                <p class="text-success font-weight-bold">Thanh toán thành công</p>
+                            }
+                        </td>
+                        <td>
+                            @String.Format(currency, "{0:c0}", item.tong_tien)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tg_tao)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Checkout","Cart",new { id = item.id })">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
-                    {
-                        <p class="text-warning font-weight-bold">Đang xử lý</p>
-                    }
-                    else
-                    {
-                        <p class="text-success font-weight-bold">Thanh toán thành công</p>
-                    }
-                </td>
-                <td>
-                    @String.Format(currency, "{0:c0}", item.tong_tien)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tg_tao)
-                </td>
-                <td>
-                    <a href="@Url.Action("Checkout","Cart",new { id = item.id })">Chi tiết</a>
-                </td>
-            </tr>
-        }
-
-    </table>
+            </table>
+        </div>
+    </div>
+    
 </div>

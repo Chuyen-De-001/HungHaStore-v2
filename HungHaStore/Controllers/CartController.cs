@@ -40,6 +40,13 @@ namespace HungHaStore.Controllers
             return RedirectToAction("Index","Home");
         }
 
+        //Xóa tất cả sản phẩm khỏi giỏ hàng.
+        public ActionResult RemoveCart()
+        {
+            CartHelper.setList(null);
+            return RedirectToAction("Index", "Cart");
+        }
+
 
         //Form nhập thông tin nhận hàng.
         public ActionResult OrderInfo()
@@ -51,12 +58,12 @@ namespace HungHaStore.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             ViewBag.nguoiDung = nguoiDung;
-            return View(list);
+            return View(list); 
         }
 
 
         //Tạo HD đơn.
-        public ActionResult CreateInvoice(string ten_nguoi_nhan,string sdt_nhan,string dia_chi_nhan)
+        public ActionResult CreateInvoice(string ten_nguoi_nhan,string sdt_nhan,string dia_chi_nhan,int phuong_thuc)
         {
             DateTime date = DateTime.Now;
             nguoi_dung identity = AuthorHelper.getIdentity();
@@ -76,6 +83,7 @@ namespace HungHaStore.Controllers
                 invoice.ten_nguoi_nhan = ten_nguoi_nhan;
                 invoice.dia_chi_nhan = dia_chi_nhan;
                 invoice.sdt_nhan = sdt_nhan;
+                invoice.phuong_thuc = phuong_thuc;
                 invoice.tg_tao = date;
                 db.hoa_don.Add(invoice);
                 db.SaveChanges();

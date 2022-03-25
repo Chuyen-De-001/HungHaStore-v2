@@ -11,6 +11,8 @@ namespace HungHaStore.Models
         public const int TRANG_THAI_XU_LY = 0;
         public const int TRANG_THAI_HOPAN_THANH = 1;
 
+        public const int THANH_TOAN_COD = 0;
+        public const int THANH_TOAN_ONLINE = 1;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public hoa_don()
         {
@@ -19,17 +21,25 @@ namespace HungHaStore.Models
 
         public int id { get; set; }
 
-        public int id_nd { get; set; }
+        public int? id_nd { get; set; }
 
         public int trang_thai { get; set; }
 
+        public int tong_tien { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string ten_nguoi_nhan { get; set; }
 
+        [Required]
+        [StringLength(255)]
         public string dia_chi_nhan { get; set; }
 
-        public string sdt_nhan { get; set; }
+        public int phuong_thuc { get; set; }
 
-        public int tong_tien { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string sdt_nhan { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime tg_tao { get; set; }

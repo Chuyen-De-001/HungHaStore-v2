@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-header">
         <b>THÔNG TIN SẢN PHẨM</b>
-        <a href="@Url.Action("Index")" class="btn btn-outline-info pull-right">< Quay lại</a>
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary pull-right">< Quay lại</a>
     </div>
     <div class="card-body">
         <a href="@Url.Action("Edit", "AStore", new { id=Model.id_kho })" class="btn btn-info"><b>Cập nhập số lượng trong kho</b></a>
@@ -23,7 +23,7 @@
                 @Html.HiddenFor(model => model.id_kho)
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2" for="ten">Tên sản phẩm</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.gia_tien, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2" for="ten">Giá tiền</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.gia_tien, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.gia_tien, "", new { @class = "text-danger" })
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.giam_gia, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2" for="ten">Giảm giá</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.giam_gia, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.giam_gia, "", new { @class = "text-danger" })
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.mo_ta, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2" for="ten">Mô tả</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.mo_ta, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.mo_ta, "", new { @class = "text-danger" })
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.luot_xem, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2" for="ten">Lượt xem</label>
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.luot_xem, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.luot_xem, "", new { @class = "text-danger" })
