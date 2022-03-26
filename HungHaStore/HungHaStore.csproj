@@ -850,6 +850,7 @@
     <Content Include="Views\Home\Profire.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Cart\OrderInfo.cshtml" />
+    <Content Include="Views\Profile\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />

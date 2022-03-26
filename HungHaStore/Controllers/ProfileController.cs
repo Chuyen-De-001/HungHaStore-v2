@@ -40,6 +40,7 @@ namespace HungHaStore.Controllers
             if (ModelState.IsValid)
             {
                 nguoi_dung identity = AuthorHelper.getIdentity();
+                nguoi_dung.mat_khau = identity.mat_khau;
                 nguoi_dung.quyen = identity.quyen;
                 db.Entry(nguoi_dung).State = EntityState.Modified;
                 db.SaveChanges();
@@ -48,6 +49,33 @@ namespace HungHaStore.Controllers
                 return RedirectToAction("Edit", new { id = nguoi_dung.id });
             }
             return View(nguoi_dung);
+        }
+
+        public ActionResult ChangePass(string oldPass = "", string newPass = "")
+        {
+            nguoi_dung identity = AuthorHelper.getIdentity();
+            if (identity == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            if (oldPass != "" && newPass != "")
+            {
+                nguoi_dung nguoiDung = db.nguoi_dung.Find(identity.id);
+                if (nguoiDung.mat_khau != oldPass)
+                {
+                    HttpContext.Session["typeAlert"] = "danger";
+                    HttpContext.Session["messageAlert"] = "Sai mật khẩu cũ.";
+                    return RedirectToAction("ChangePass","Profile");
+                }
+                nguoiDung.mat_khau = newPass;
+                UpdateModel(nguoiDung);
+                db.SaveChanges();
+                HttpContext.Session["typeAlert"] = "success";
+                HttpContext.Session["messageAlert"] = "Đổi mật khẩu thành công.";
+                return RedirectToAction("ChangePass", "Profile");
+            }
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

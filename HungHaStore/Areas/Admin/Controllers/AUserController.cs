@@ -16,9 +16,15 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/AUser
-        public ActionResult Index(int pageSize = 20, int page = 1)
+        public ActionResult Index(int pageSize = 20, int page = 1,string search = "")
         {
-            IEnumerable<nguoi_dung> nguoiDungs = db.nguoi_dung.OrderByDescending(s=>s.id).ToPagedList(page, pageSize);
+            var query = db.nguoi_dung.OrderByDescending(s => s.id);
+            if(search != "")
+            {
+                query = (IOrderedQueryable<nguoi_dung>)query.Where(s => s.ho_ten.Contains(search) || s.email.Contains(search) || s.sdt.Contains(search) || s.tai_khoan.Contains(search));
+            }
+            IEnumerable<nguoi_dung> nguoiDungs = query.ToPagedList(page, pageSize);
+            ViewBag.search = search;
             return View(nguoiDungs);
         }
 

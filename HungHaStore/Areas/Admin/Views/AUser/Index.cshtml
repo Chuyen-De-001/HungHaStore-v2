@@ -5,96 +5,84 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Danh sách người dùng</h2>
-<br />
-<table class="table table-striped border">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                Tài khoản
-            </th>
-            <th>
-                Mật khẩu
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Ngày sinh
-            </th>
-            <th>
-                SĐT
-            </th>
-            <th>
-                Địa chỉ
-            </th>
-            <th>
-                Giới tính
-            </th>
-            <th>
-                Quyền
-            </th>
-            <th>
-                Thời gian tạo
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <b>DANH SÁCH NGƯỜI DÙNG</b>
+        </div>
+        <div class="card-body">
+            <form action="/Admin/AUser" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search" placeholder="Tìm kiếm khách hàng" value="@ViewBag.search">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+            <hr />
+            <table class="table table-striped border">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Tài khoản
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Tên
+                        </th>
+                        <th>
+                            SĐT
+                        </th>
+                        <th>
+                            Quyền
+                        </th>
+                        <th>
+                            Thời gian tạo
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
 
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.tai_khoan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mat_khau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ngay_sinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sdt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dia_chi)
-            </td>
-            <td>
-                @{
-                    string gioi_tinh = "";
-                    if (item.gioi_tinh == 0)
-                    {
-                        gioi_tinh = "Nam";
-                    }
-                    else
-                    {
-                        gioi_tinh = "Nữ";
-                    }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tai_khoan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ho_ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.sdt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.quyen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tg_tao)
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="@Url.Action("Edit","AUser",new { id= item.id})">Sửa</a>
+                            <a class="btn btn-danger" href="@Url.Action("Delete","AUser",new { id= item.id})">Xóa</a>
+                        </td>
+                    </tr>
                 }
-                @gioi_tinh
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.quyen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tg_tao)
-            </td>
-            <td>
-                <a class="btn btn-warning" href="@Url.Action("Edit","AUser",new { id= item.id})">Sửa</a>
-                <a class="btn btn-danger" href="@Url.Action("Delete","AUser",new { id= item.id})">Xóa</a>
-            </td>
-        </tr>
-    }
 
-</table>
-<div class="row pb-5">
-    <div class="col">
-        <div class="pagination justify-content-md-center">
-            @Html.PagedListPager(Model, page => Url.Action("Index", "AUser", new { page }))
+            </table>
+            <div class="row pb-5">
+                <div class="col">
+                    <div class="pagination justify-content-md-center">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", "AUser", new { page }))
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
