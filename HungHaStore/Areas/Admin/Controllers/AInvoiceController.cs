@@ -20,17 +20,6 @@ namespace HungHaStore.Areas.Admin.Controllers
         public ActionResult Index(int pageSize = 20, int page = 1,string search = "",string daterange = "")
         {
             var query = db.hoa_don.OrderByDescending(s => s.id);
-            if(search != "")
-            {
-                query = (IOrderedQueryable<hoa_don>)query.Where(s => s.ten_nguoi_nhan.Contains(search) || s.sdt_nhan.Contains(search));
-            }
-            if(daterange != "")
-            {
-                string[] date = daterange.Split('-');
-                DateTime dateStart = DateTime.ParseExact(date[0].Trim(), "yyyy/MM/dd", null);
-                DateTime dateEnd = DateTime.ParseExact(date[1].Trim(), "yyyy/MM/dd", null);
-                query = (IOrderedQueryable<hoa_don>)query.Where(s => s.tg_tao >= dateStart && s.tg_tao <= dateEnd);
-            }
             IEnumerable<hoa_don> hoaDons = query.ToPagedList(page, pageSize);
             ViewBag.search = search;
             ViewBag.daterange = daterange;
