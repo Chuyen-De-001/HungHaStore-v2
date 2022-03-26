@@ -40,14 +40,6 @@ namespace HungHaStore.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        //Xóa tất cả sản phẩm khỏi giỏ hàng.
-        public ActionResult RemoveCart()
-        {
-            CartHelper.setList(null);
-            return RedirectToAction("Index", "Cart");
-        }
-
-
         //Form nhập thông tin nhận hàng.
         public ActionResult OrderInfo()
         {
