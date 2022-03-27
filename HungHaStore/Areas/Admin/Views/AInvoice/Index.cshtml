@@ -75,9 +75,17 @@
                 {
                     <span class="font-weight-bold text-warning">Đang xử lý</span>
                 }
-                else
+                else if (item.trang_thai == hoa_don.TRANG_THAI_HOPAN_THANH)
                 {
                     <span class="font-weight-bold text-success">Hoàn thành</span>
+                }
+                else if (item.trang_thai == hoa_don.TRANG_THAI_YEU_CAU_HUY)
+                {
+                    <span class="font-weight-bold text-secondary">Yêu cầu hủy</span>
+                }
+                else
+                {
+                    <span class="font-weight-bold text-danger">Đã hủy</span>
                 }
             </td>
             <td>
@@ -88,7 +96,22 @@
             </td>
             <td>
                 <a class="btn btn-warning" href="@Url.Action("Details","AInvoice",new { id= item.id})">Chi tiết</a>
-                <a class="btn btn-success" href="@Url.Action("Payment","AInvoice",new { id= item.id})">Thanh toán</a>
+                @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                {
+                    <a class="btn btn-success" href="@Url.Action("Payment","AInvoice",new { id= item.id})">Thanh toán</a>
+                }
+                else if (item.trang_thai == hoa_don.TRANG_THAI_YEU_CAU_HUY)
+                {
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Yêu cầu hủy
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="@Url.Action("ConfirmRequestCannel","AInvoice",new { id=item.id,confirm="yes"})">Xác nhận</a>
+                            <a class="dropdown-item" href="@Url.Action("ConfirmRequestCannel","AInvoice",new { id=item.id,confirm="no"})">Từ chối</a>
+                        </div>
+                    </div>
+                }
                 <a class="btn btn-danger" href="@Url.Action("Delete","AInvoice",new { id= item.id})" data-confirm="Chắc chắn xóa? Nếu xóa danh mục sẽ xóa tất cả những sản phẩm trong danh mục đó">Xóa</a>
             </td>
         </tr>

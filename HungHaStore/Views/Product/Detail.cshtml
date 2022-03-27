@@ -60,23 +60,12 @@
                         <div class="quantity">
                             <div class="pro-qty">
                                 <a class="dec qtybtn">-</a>
-                                <input type="text"  value="1" name="soluong" readonly>
+                                <input type="text" value="1" name="soluong" readonly>
                                 <a class="inc qtybtn">+</a>
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn" name="add_to_card">THÊM GIỎ HÀNG</a>
-                    @if (Model.kho == null || Model.kho.so_luong == 0)
-                    {
-                        <div class="mt-5 p-5 border">
-                            <h6 class="text-center mb-4">ĐĂNG KÝ NHẬN THÔNG TIN KHI CÓ HÀNG</h6>
-                            <input type="text" id="order-email" class="form-control rounded-pill mb-4" style="background: #f9f9f9;" value="" />
-                            <div class="form-group text-center">
-                                <button type="button" id="order-submit" class="btn btn-info">Đăng ký nhận thông tin</button>
-                            </div>
-                        </div>
-                    }
-
+                    <a href="javascrip:void(0)" class="primary-btn" name="add_to_card">THÊM GIỎ HÀNG</a>
                     <ul>
                         <li><b>Trạng thái</b>@Html.Raw(trang_thai)</li>
                         <li><b>Vận chuyển</b> <span>Miễn phí giao hàng</span></li>
@@ -90,6 +79,16 @@
                             </div>
                         </li>
                     </ul>
+                    @if (Model.kho == null || Model.kho.so_luong == 0)
+                    {
+                        <div class="mt-5 p-5 border">
+                            <h6 class="text-center mb-4">ĐĂNG KÝ NHẬN THÔNG TIN KHI CÓ HÀNG</h6>
+                            <input type="text" id="order-email" class="form-control rounded-pill mb-4" style="background: #f9f9f9;" value="" />
+                            <div class="form-group text-center">
+                                <button type="button" id="order-submit" class="btn btn-info">Đăng ký nhận thông tin</button>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="col-lg-12">
@@ -177,42 +176,6 @@
     });
 
     $('a[name=add_to_card]').on('click', function () {
-            var cart = $('#shopping-cart');
-        var imgtodrag = $('.product__details__pic__item').find('img').eq(0);
-        console.log(imgtodrag);
-            if (imgtodrag) {
-                var imgclone = imgtodrag.clone()
-                    .offset({
-                        top: imgtodrag.offset().top,
-                        left: imgtodrag.offset().left
-                    })
-                    .css({
-                        'opacity': '0.8',
-                        'position': 'absolute',
-                        'height': '150px',
-                        'width': '150px',
-                        'z-index': '100'
-                    })
-                    .appendTo($('body'))
-                    .animate({
-                        'top': cart.offset().top + 10,
-                        'left': cart.offset().left + 10,
-                        'width': 75,
-                        'height': 75
-                    }, 1000, 'easeInOutExpo');
-
-                setTimeout(function () {
-                    cart.effect("shake", {
-                        times: 2
-                    }, 500);
-                }, 1500);
-                imgclone.animate({
-                    'width': 0,
-                    'height': 0
-                }, function () {
-                    $(this).detach()
-                });
-            }
             var id = @Model.id;
             var url = "@Url.Action("Add", "Ajax")";
             var soluong = $("input[name=soluong]").val();
@@ -223,13 +186,57 @@
                     id: id,
                     soluong: soluong,
                 },
-                dataType:'json',
+                dataType: 'json',
                 success: function (response) {
-                    $("#count_cart").html(response.count);
-                    $("#sum_money").html(response.sumMoney);
+                    if (response.status == "200") {
+                        flyToCart();
+                        $("#count_cart").html(response.count);
+                        $("#sum_money").html(response.sumMoney);
+                    } else {
+                        alert(response.message);
+                    }
+                    
                 }
             });
-        });
 
+    });
+
+    function flyToCart() {
+        var cart = $('#shopping-cart');
+        var imgtodrag = $('.product__details__pic__item').find('img').eq(0);
+        if (imgtodrag) {
+            var imgclone = imgtodrag.clone()
+                .offset({
+                    top: imgtodrag.offset().top,
+                    left: imgtodrag.offset().left
+                })
+                .css({
+                    'opacity': '0.8',
+                    'position': 'absolute',
+                    'height': '150px',
+                    'width': '150px',
+                    'z-index': '100'
+                })
+                .appendTo($('body'))
+                .animate({
+                    'top': cart.offset().top + 10,
+                    'left': cart.offset().left + 10,
+                    'width': 75,
+                    'height': 75
+                }, 1000, 'easeInOutExpo');
+
+            setTimeout(function () {
+                cart.effect("shake", {
+                    times: 2
+                }, 500);
+            }, 1500);
+            imgclone.animate({
+                'width': 0,
+                'height': 0
+            }, function () {
+                $(this).detach()
+            });
+        }
+    }
 
 </script>

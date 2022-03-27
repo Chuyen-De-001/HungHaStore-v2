@@ -11,6 +11,9 @@ namespace HungHaStore.Models
         public const int TRANG_THAI_XU_LY = 0;
         public const int TRANG_THAI_HOPAN_THANH = 1;
 
+        public const int TRANG_THAI_YEU_CAU_HUY = 2;
+        public const int TRANG_THAI_HUY = 3;
+
         public const int THANH_TOAN_COD = 0;
         public const int THANH_TOAN_ONLINE = 1;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -41,7 +44,7 @@ namespace HungHaStore.Models
         [StringLength(255)]
         public string sdt_nhan { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "date")] 
         public DateTime tg_tao { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

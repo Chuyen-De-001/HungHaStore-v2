@@ -14,16 +14,10 @@ namespace HungHaStore.Controllers
     public class HomeController : Controller
     {
         public static Model1 db = new Model1();
+
+        //Trang chủ
         public ActionResult Index()
         {
-            string daterange = "2022/03/26 - 2022/03/26";
-            var query = db.hoa_don.OrderByDescending(s => s.id);
-            string[] date = daterange.Split('-');
-            DateTime dateStart = DateTime.ParseExact(date[0].Trim(), "yyyy/MM/dd", null);
-            DateTime dateEnd = DateTime.ParseExact(date[1].Trim(), "yyyy/MM/dd", null);
-            query = (IOrderedQueryable<hoa_don>)query.Where(s => s.tg_tao > dateStart && s.tg_tao < dateEnd);
-            IEnumerable<hoa_don> hoaDons = query.ToPagedList(1, 10);
-
             // lấy dữ liệu từ database
             var loaiSanPham = db.loai_sp.SqlQuery("select * from loai_sp").ToList(); 
             var sanPhamNoiBat = db.san_pham.SqlQuery("select TOP 16 * from san_pham ").ToList(); 
@@ -55,6 +49,7 @@ namespace HungHaStore.Controllers
             return View();
         }
 
+        //Show danh sách hóa đơn
         public ActionResult ListInvoice()
         {
             nguoi_dung identity = AuthorHelper.getIdentity();
@@ -65,5 +60,28 @@ namespace HungHaStore.Controllers
             List<hoa_don> hoaDons = db.hoa_don.Where(s => s.id_nd == identity.id).ToList();
             return View(hoaDons);
         }
+
+
+        //Yêu cầu hủy hóa đơn.
+        public ActionResult RequestCancelInvoice(int? id)
+        {
+
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            hoa_don hoaDon = db.hoa_don.Find(id);
+            if(hoaDon == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            hoaDon.trang_thai = hoa_don.TRANG_THAI_YEU_CAU_HUY;
+            UpdateModel(hoaDon);
+            db.SaveChanges();
+            HttpContext.Session["typeAlert"] = "success";
+            HttpContext.Session["messageAlert"] = "Yêu cầu hủy thành công, chờ quản trị viên xác nhận.";
+            return RedirectToAction("ListInvoice", "Home");
+        }
+
     }
 }
