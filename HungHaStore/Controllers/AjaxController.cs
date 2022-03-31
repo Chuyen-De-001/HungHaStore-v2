@@ -39,7 +39,7 @@ namespace HungHaStore.Controllers
                 if(soluong > sanPham.kho.so_luong)
                 {
                     response["status"] = "400";
-                    response["message"] = "Số lượng sản phẩm không đủ.";
+                    response["message"] = "Số lượng sản phẩm không đủ. Trong kho chỉ còn "+sanPham.kho.so_luong+" sản phẩm";
                 }
             }
             else
@@ -47,7 +47,7 @@ namespace HungHaStore.Controllers
                 if(cart.so_luong + soluong > sanPham.kho.so_luong)
                 {
                     response["status"] = "400";
-                    response["message"] = "Số lượng sản phẩm không đủ.";
+                    response["message"] = "Số lượng sản phẩm không đủ. Trong kho chỉ còn " + sanPham.kho.so_luong + " sản phẩm";
                 }
             }
             if(response["status"] == "200")

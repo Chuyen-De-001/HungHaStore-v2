@@ -102,7 +102,7 @@ namespace HungHaStore.Areas.Admin.Controllers
         }
 
         //Xác nhận hủy hóa đơn.
-        public ActionResult ConfirmRequestCannel(int id,string confirm)
+        public ActionResult ConfirmRequestCannel(int? id,string confirm)
         {
             if (id == null || confirm == null)
             {
@@ -125,7 +125,7 @@ namespace HungHaStore.Areas.Admin.Controllers
                 HttpContext.Session["typeAlert"] = "danger";
                 HttpContext.Session["messageAlert"] = "Từ chối hủy hóa đơn";
             }
-            UpdateModel(hoaDon);
+            //UpdateModel(hoaDon);
             db.SaveChanges();
             return RedirectToAction("Index");
 

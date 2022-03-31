@@ -21,7 +21,6 @@ namespace HungHaStore.Models
         public virtual DbSet<nha_cung_cap> nha_cung_cap { get; set; }
         public virtual DbSet<san_pham> san_pham { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<hoa_don>()

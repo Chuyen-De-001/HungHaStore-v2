@@ -6,15 +6,14 @@ using System.Web;
 using System.Web.Mvc;
 using HungHaStore.Helper;
 using System.Net;
-using System.Data.Entity;
 using PagedList;
+using System.Data.Entity;
 
 namespace HungHaStore.Controllers
 {
     public class HomeController : Controller
     {
         public static Model1 db = new Model1();
-
         //Trang chủ
         public ActionResult Index()
         {
@@ -48,40 +47,5 @@ namespace HungHaStore.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
-
-        //Show danh sách hóa đơn
-        public ActionResult ListInvoice()
-        {
-            nguoi_dung identity = AuthorHelper.getIdentity();
-            if(identity == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            List<hoa_don> hoaDons = db.hoa_don.Where(s => s.id_nd == identity.id).ToList();
-            return View(hoaDons);
-        }
-
-
-        //Yêu cầu hủy hóa đơn.
-        public ActionResult RequestCancelInvoice(int? id)
-        {
-
-            if(id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            hoa_don hoaDon = db.hoa_don.Find(id);
-            if(hoaDon == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            hoaDon.trang_thai = hoa_don.TRANG_THAI_YEU_CAU_HUY;
-            UpdateModel(hoaDon);
-            db.SaveChanges();
-            HttpContext.Session["typeAlert"] = "success";
-            HttpContext.Session["messageAlert"] = "Yêu cầu hủy thành công, chờ quản trị viên xác nhận.";
-            return RedirectToAction("ListInvoice", "Home");
-        }
-
     }
 }

@@ -38,36 +38,38 @@
                             <ul>
                                 @foreach (loai_sp item in loaiSanPham)
                                 {
-                                    <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem"><input type="checkbox" class="font-weight-bold font-italic" name="danh_muc_sp" value="@item.id" id="danh_muc_@item.id" @{check = Array.IndexOf(danh_muc, item.id.ToString()) > -1 ? "checked" : "";@check}/><label for="danh_muc_@item.id">&nbsp;@item.ten</label></li>
+                                    <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem"><input type="checkbox" class="font-weight-bold font-italic" name="danh_muc_sp" value="@item.id" id="danh_muc_@item.id" @{check = Array.IndexOf(danh_muc, item.id.ToString()) > -1 ? "checked" : ""; @check } /><label for="danh_muc_@item.id">&nbsp;@item.ten</label></li>
                                 }
-                            <input type="hidden" name="search" value="@search" />
+                                <input type="hidden" name="search" value="@search" />
                             </ul>
                         </div>
                         <div class="sidebar__item">
                             <h4>Giá</h4>
                             <ul>
-                                <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem"><input type="radio" name="price" value="0:500000" id="price_500" @{check = price == "0:500000" ? "checked" : "";@check}/>
-                                <label for="price_500">&nbsp;DƯỚI 500.000đ</label>
+                                <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
+                                    <input type="radio" name="price" value="0:500000" id="price_500" @{check = price == "0:500000" ? "checked" : ""; @check } />
+                                    <label for="price_500">&nbsp;DƯỚI 500.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="500000:1000000" id="price_500_1000" @{check = price == "500000:1000000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="500000:1000000" id="price_500_1000" @{check = price == "500000:1000000" ? "checked" : ""; @check } />
                                     <label for="price_500_1000">&nbsp;500.000đ - 1.000.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="1000000:1500000" id="price_1000_1500" @{check = price == "1000000:1500000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="1000000:1500000" id="price_1000_1500" @{check = price == "1000000:1500000" ? "checked" : ""; @check } />
                                     <label for="price_1000_1500">&nbsp;1.000.000đ - 1.500.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="1500000:2000000" id="price_1500_2000" @{check = price == "1500000:2000000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="1500000:2000000" id="price_1500_2000" @{check = price == "1500000:2000000" ? "checked" : ""; @check } />
                                     <label for="price_1500_2000">&nbsp;1.500.000đ - 2.000.000đ</label>
                                 </li>
                                 <li class="p-1 font-weight-bold font-italic" style="font-size:0.8rem">
-                                    <input type="radio" name="price" value="2000000" id="price_2000" @{check = price == "2000000" ? "checked" : "";@check}/>
+                                    <input type="radio" name="price" value="2000000" id="price_2000" @{check = price == "2000000" ? "checked" : ""; @check } />
                                     <label for="price_2000">&nbsp;TRÊN 2.000.000đ</label>
                                 </li>
                             </ul>
                         </div>
                         <button type="submit" class="btn btn-info"><i class="fa fa-filter"></i> Lọc</button>
+                        <button type="reset" class="btn btn-warning">Làm mới</button>
                     </div>
                 </form>
                 

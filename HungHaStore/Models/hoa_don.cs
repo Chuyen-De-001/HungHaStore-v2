@@ -5,6 +5,7 @@ namespace HungHaStore.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Threading.Tasks;
 
     public partial class hoa_don
     {
@@ -51,5 +52,10 @@ namespace HungHaStore.Models
         public virtual ICollection<chitiet_hd> chitiet_hd { get; set; }
 
         public virtual nguoi_dung nguoi_dung { get; set; }
+
+        internal static Task<object> ToListAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

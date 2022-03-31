@@ -2,7 +2,15 @@
 @using HungHaStore.Models;
 @{
     var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
-    nguoi_dung nguoiDung = ViewBag.nguoiDung;
+    string tenNguoiNhan = "";
+    string sdtNhan = "";
+    string diaChiNhan = "";
+    if(ViewBag.nguoiDung != null)
+    {
+        tenNguoiNhan = ViewBag.nguoiDung.ho_ten;
+        sdtNhan = ViewBag.nguoiDung.sdt;
+        diaChiNhan = ViewBag.nguoiDung.dia_chi;
+    }
     ViewBag.Title = "Index";
 }
 <div class="container mb-5">
@@ -16,15 +24,15 @@
                 <hr />
                 <div class="form-group">
                     <label for="">Tên người nhận</label>
-                    <input type="text" class="form-control" name="ten_nguoi_nhan" placeholder="Nhập vào tên người nhận" required value="@nguoiDung.ho_ten">
+                    <input type="text" class="form-control" name="ten_nguoi_nhan" placeholder="Nhập vào tên người nhận" required value="@tenNguoiNhan">
                 </div>
                 <div class="form-group">
                     <label>Số điện thoại người nhận</label>
-                    <input type="text" class="form-control" name="sdt_nhan" placeholder="Nhập số điện thoại" required value="@nguoiDung.sdt">
+                    <input type="text" class="form-control" name="sdt_nhan" placeholder="Nhập số điện thoại" required value="@sdtNhan">
                 </div>
                 <div class="form-group">
                     <label>Địa chỉ nhận</label>
-                    <input type="text" class="form-control" name="dia_chi_nhan" placeholder="Nhập địa chỉ nhận hàng" required value="@nguoiDung.dia_chi">
+                    <input type="text" class="form-control" name="dia_chi_nhan" placeholder="Nhập địa chỉ nhận hàng" required value="@diaChiNhan">
                 </div>
                 <h4 class="mt-5">Thông tin sản phẩm</h4>
                 <hr />

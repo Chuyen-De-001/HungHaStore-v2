@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<HungHaStore.Models.hoa_don>
+@using PagedList.Mvc
 @using HungHaStore.Models;
 @{
     var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     ViewBag.Title = "ListInvoice";
 }
-
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -35,13 +35,15 @@
                             {
                                 <p class="text-warning font-weight-bold">Đang xử lý</p>
                             }
-                            else if(item.trang_thai == hoa_don.TRANG_THAI_YEU_CAU_HUY)
+                            else if (item.trang_thai == hoa_don.TRANG_THAI_YEU_CAU_HUY)
                             {
-                                    <p class="text-danger font-weight-bold">Yêu cầu hủy</p>            
-                            }else if(item.trang_thai == hoa_don.TRANG_THAI_HUY)
+                                <p class="text-danger font-weight-bold">Yêu cầu hủy</p>
+                            }
+                            else if (item.trang_thai == hoa_don.TRANG_THAI_HUY)
                             {
-                                    <p class="text-secondary font-weight-bold">Đã hủy</p>
-                            }else
+                                <p class="text-secondary font-weight-bold">Đã hủy</p>
+                            }
+                            else
                             {
                                 <p class="text-success font-weight-bold">Thanh toán thành công</p>
                             }
@@ -54,16 +56,15 @@
                         </td>
                         <td>
                             <a href="@Url.Action("Checkout","Cart",new { id = item.id })" class="btn btn-secondary">Chi tiết</a>
-                            @if(item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                            @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
                             {
-                                <a href="@Url.Action("RequestCancelInvoice","Home",new { id=item.id})" class="btn btn-danger">Hủy Hóa Đơn</a>
+                                <a href="@Url.Action("RequestCancelInvoice","Invoice",new { id=item.id})" class="btn btn-danger">Hủy Hóa Đơn</a>
                             }
                         </td>
                     </tr>
                 }
-
             </table>
         </div>
     </div>
-    
+
 </div>

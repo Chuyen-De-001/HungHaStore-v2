@@ -26,9 +26,21 @@ namespace HungHaStore.Controllers
         {
             hoa_don hoaDon = db.hoa_don.Where(s => s.id == id).SingleOrDefault();
             nguoi_dung nguoiDung = AuthorHelper.getIdentity();
-            if (nguoiDung == null)
+
+            if(hoaDon.id_nd != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                if(nguoiDung == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
+                else
+                {
+                    if(nguoiDung.id != hoaDon.id_nd)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                    }
+                }
+                
             }
             if (hoaDon != null)
             {
@@ -53,10 +65,6 @@ namespace HungHaStore.Controllers
         {
             List<Cart> list = CartHelper.getList();
             nguoi_dung nguoiDung = AuthorHelper.getIdentity();
-            if(nguoiDung == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
             ViewBag.nguoiDung = nguoiDung;
             return View(list); 
         }
@@ -67,17 +75,17 @@ namespace HungHaStore.Controllers
         {
             DateTime date = DateTime.Now;
             nguoi_dung identity = AuthorHelper.getIdentity();
-            if(identity == null)
-            {
-                HttpContext.Session["typeAlert"] = "danger";
-                HttpContext.Session["messageAlert"] = "Phải đăng nhập mới có thể tạo hóa đơn.";
-                return RedirectToAction("Index", "Cart");
-            }
             List<Cart> list = CartHelper.getList();
             if(list != null)
             {
                 hoa_don invoice = new hoa_don();
-                invoice.id_nd = AuthorHelper.getIdentity().id;
+                if(identity != null)
+                {
+                    invoice.id_nd = identity.id;
+                }
+                else {
+                    invoice.id_nd = null;
+                }
                 invoice.trang_thai = hoa_don.TRANG_THAI_XU_LY;
                 invoice.tong_tien = CartHelper.sumMoney();
                 invoice.ten_nguoi_nhan = ten_nguoi_nhan;
