@@ -99,23 +99,13 @@ namespace HungHaStore.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             nha_cung_cap nha_cung_cap = db.nha_cung_cap.Find(id);
-            if (nha_cung_cap == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nha_cung_cap);
-        }
-
-        // POST: Admin/AProvider/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            nha_cung_cap nha_cung_cap = db.nha_cung_cap.Find(id);
             db.nha_cung_cap.Remove(nha_cung_cap);
             db.SaveChanges();
+            HttpContext.Session["typeAlert"] = "success";
+            HttpContext.Session["messageAlert"] = "Xóa thông tin nhà cung cấp thành công.";
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {
