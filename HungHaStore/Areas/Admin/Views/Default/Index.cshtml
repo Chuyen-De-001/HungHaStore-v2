@@ -1,8 +1,105 @@
-﻿
+﻿@using HungHaStore.Models;
 @{
+
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<hoa_don> hoaDonGanNhat = ViewBag.hoaDonGanNhat;
+    var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
 <h2>Hệ thống quản lý</h2>
 
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                HÓA ĐƠN GẦN ĐÂY
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">MÃ HĐ</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (hoaDonGanNhat != null)
+                        {
+                            foreach (hoa_don item in hoaDonGanNhat)
+                            {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.ten_nguoi_nhan</td>
+                            <td>
+                                @String.Format(currency, "{0:c0}", item.tong_tien)
+                            </td>
+                            <td>
+                                @if (item.trang_thai == hoa_don.TRANG_THAI_XU_LY)
+                                {
+                                    <span class="font-weight-bold text-warning">Đang xử lý</span>
+                                }
+                                else if (item.trang_thai == hoa_don.TRANG_THAI_HOPAN_THANH)
+                                {
+                                    <span class="font-weight-bold text-success">Hoàn thành</span>
+                                }
+                                else if (item.trang_thai == hoa_don.TRANG_THAI_YEU_CAU_HUY)
+                                {
+                                    <span class="font-weight-bold text-secondary">Yêu cầu hủy</span>
+                                }
+                                else
+                                {
+                                    <span class="font-weight-bold text-danger">Đã hủy</span>
+                                }
+                            </td>
+                        </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="4">Không có dữ liệu.</td></tr>
+                        }
+                        </tbody>
+                </table>
+            
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                BÁO CÁO THÔNG KÊ
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">THỜI GIAN</th>
+                            <th scope="col">SỐ LƯỢNG HĐ</th>
+                            <th scope="col">SỐ TIỀN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">HÔM NAY</th>
+                            <td>@ViewBag.soHDHomNay</td>
+                            <td>@String.Format(currency, "{0:c0}", ViewBag.tongTienHomNay)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">7 NGÀY</th>
+                            <td>@ViewBag.soHD7Day</td>
+                            <td>@String.Format(currency, "{0:c0}", ViewBag.tongTien7Day)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">30 NGÀY</th>
+                            <td>@ViewBag.soHD30Day</td>
+                            <td>@String.Format(currency, "{0:c0}", ViewBag.tongTien30Day)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

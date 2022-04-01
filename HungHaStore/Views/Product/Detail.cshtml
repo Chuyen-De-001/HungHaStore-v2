@@ -1,5 +1,6 @@
 ﻿@using HungHaStore.Models
 @model HungHaStore.Models.san_pham
+@using HungHaStore.Helper
 @{
     var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     ViewBag.Title = Model.ten;
@@ -46,11 +47,11 @@
                         @if (Model.giam_gia > 0)
                         {
                             <span style="text-decoration:line-through;font-size:80%;color:black">@String.Format(currency, "{0:c0}", Model.gia_tien)</span>
-                            <span class="text-danger">@String.Format(currency, "{0:c0}", Model.gia_tien)</span>
+                            <span class="text-danger">@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(Model.giam_gia, Model.gia_tien))</span>
                         }
                         else
                         {
-                            <span>@String.Format(currency, "{0:c0}", Model.gia_tien)</span>
+                            <span>@String.Format(currency, "{0:c0}", CalculatorHelper.priceSale(Model.giam_gia,Model.gia_tien))</span>
                         }
                     </div>
                     <p>

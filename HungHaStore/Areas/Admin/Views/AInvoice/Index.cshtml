@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Tìm kiếm</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <a href="@Url.Action("Index","AInvoice")" class="btn btn-secondary">Làm lại</a>
             </div>
         </form>
         <hr />
@@ -146,11 +146,5 @@
             $(this).val('');
         });
 
-        $('button[type=reset]').on('click', function () {
-            console.log($('input[name=search]'));
-            console.log($('input[name=daterange]'));
-            $('input[name=search]').val("");
-            $('input[name=daterange]').trigger("cancel.daterangepicker");
-        })
     });
 </script>

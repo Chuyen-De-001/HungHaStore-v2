@@ -24,7 +24,7 @@ namespace HungHaStore.Areas.Admin.Controllers
             var query = db.san_pham.OrderByDescending(s => s.id);
             if(search != "")
             {
-             query = (IOrderedQueryable<san_pham>)query.Where(s => s.ten.Contains(search));
+                query = (IOrderedQueryable<san_pham>)query.Where(s => s.ten.Contains(search));
             }
             IEnumerable<san_pham> model = query.ToPagedList(page, pageSize);
             ViewBag.search = search;
