@@ -46,9 +46,8 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                <a href="@Url.Action("Edit","AProvider",new { id=item.id})" class="btn btn-warning">Sửa</a>
+                <a href="@Url.Action("Delete","AProvider",new { id=item.id})" class="btn btn-danger">Xóa</a>
             </td>
         </tr>
     }

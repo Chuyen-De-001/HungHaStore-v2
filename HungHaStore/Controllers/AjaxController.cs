@@ -23,20 +23,40 @@ namespace HungHaStore.Controllers
         }
 
         //Thêm sản phẩm vào giở hàng.
+        //Kiểm tra số lượng sản phẩm trong kho. Nếu không đủ thì sẽ thông báo.
         public ActionResult Add(int id,int? soluong)
         {
             var currency = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
             Dictionary<string, string> response = new Dictionary<string, string>();
+            response["status"] = "200";
+            response["message"] = "";
+            response["count"] = "";
+            response["sumMoney"] = "";
             san_pham sanPham = db.san_pham.Find(id);
-            List<Cart> list = CartHelper.Add(sanPham,soluong);
-            response["count"] = CartHelper.getList().Count().ToString();
-            response["sumMoney"] = String.Format(currency, "{0:c0}", CartHelper.sumMoney());
-            return Content(JsonConvert.SerializeObject(response));
-        }
-
-       public ActionResult Test()
-        {
-            return Content("false");
+            Cart cart = CartHelper.getList().Find(s => s.id_san_pham == sanPham.id);
+            if (cart == null)
+            {
+                if(soluong > sanPham.kho.so_luong)
+                {
+                    response["status"] = "400";
+                    response["message"] = "Số lượng sản phẩm không đủ. Trong kho chỉ còn "+sanPham.kho.so_luong+" sản phẩm";
+                }
+            }
+            else
+            {
+                if(cart.so_luong + soluong > sanPham.kho.so_luong)
+                {
+                    response["status"] = "400";
+                    response["message"] = "Số lượng sản phẩm không đủ. Trong kho chỉ còn " + sanPham.kho.so_luong + " sản phẩm";
+                }
+            }
+            if(response["status"] == "200")
+            {
+                List<Cart> list = CartHelper.Add(sanPham, soluong);
+                response["count"] = CartHelper.getList().Count().ToString();
+                response["sumMoney"] = String.Format(currency, "{0:c0}", CartHelper.sumMoney());
+            }
+            return Content(JsonConvert.SerializeObject(response));   
         }
 
         public ActionResult Order(string email,int id_sp)

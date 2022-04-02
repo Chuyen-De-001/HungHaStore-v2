@@ -48,24 +48,6 @@ namespace HungHaStore.Areas.Admin.Controllers
         {
             return View();
         }
-
-        // POST: Admin/AUser/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,tai_khoan,mat_khau,email,ngay_sinh,sdt,dia_chi,gioi_tinh,quyen,tg_tao")] nguoi_dung nguoi_dung)
-        {
-            if (ModelState.IsValid)
-            {
-                db.nguoi_dung.Add(nguoi_dung);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(nguoi_dung);
-        }
-
         // GET: Admin/AUser/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -100,26 +82,11 @@ namespace HungHaStore.Areas.Admin.Controllers
         // GET: Admin/AUser/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
-            if (nguoi_dung == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nguoi_dung);
-        }
-
-        // POST: Admin/AUser/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
             nguoi_dung nguoi_dung = db.nguoi_dung.Find(id);
             db.nguoi_dung.Remove(nguoi_dung);
             db.SaveChanges();
+            HttpContext.Session["typeAlert"] = "success";
+            HttpContext.Session["messageAlert"] = "Xóa khách hàng thành công.";
             return RedirectToAction("Index");
         }
 

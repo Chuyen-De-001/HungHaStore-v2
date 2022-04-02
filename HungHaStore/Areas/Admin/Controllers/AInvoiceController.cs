@@ -90,6 +90,36 @@ namespace HungHaStore.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        //Xác nhận hủy hóa đơn.
+        public ActionResult ConfirmRequestCannel(int? id,string confirm)
+        {
+            if (id == null || confirm == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            hoa_don hoaDon = db.hoa_don.Find(id);
+            if(hoaDon == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (confirm == "yes")
+            {
+                hoaDon.trang_thai = hoa_don.TRANG_THAI_HUY;
+                HttpContext.Session["typeAlert"] = "success";
+                HttpContext.Session["messageAlert"] = "Xác nhận hủy hóa đơn thành công.";
+            }
+            else
+            {
+                hoaDon.trang_thai = hoa_don.TRANG_THAI_XU_LY;
+                HttpContext.Session["typeAlert"] = "danger";
+                HttpContext.Session["messageAlert"] = "Từ chối hủy hóa đơn";
+            }
+            //UpdateModel(hoaDon);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

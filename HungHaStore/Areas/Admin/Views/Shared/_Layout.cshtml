@@ -14,6 +14,7 @@
     string _typeAlert = (string)HttpContext.Current.Session["typeAlert"];
     string _messageAlert = (string)HttpContext.Current.Session["messageAlert"];
     nguoi_dung _identity = AuthorHelper.getIdentity();
+    string hostName = HttpContext.Current.Request.Url.ToString().Replace(HttpContext.Current.Request.Path.ToString(),"");
 }
 <!DOCTYPE html>
 <html>
@@ -29,14 +30,15 @@
 <body>
     <div class="p-3 px-md-4 mb-3 bg-dark border-bottom box-shadow text-white">
         <div class="container d-flex flex-column flex-md-row align-items-center">
-            <a href="@Url.Action("Index","Home")" class="my-0 mr-md-auto font-weight-normal"><img src="/Assest/img/logo.png" alt=""></a>
+            <a href="@hostName" class="my-0 mr-md-auto font-weight-normal"><img src="/Assest/img/logo.png" alt=""></a>
             <nav class="my-2 my-md-0 mr-md-3">
+                <a href="#">Dasbroad</a>
                 <a class="p-2 text-white active" href="@Url.Action("Index","AProduct")">Sản phẩm</a>
                 <a class="p-2 text-white" href="@Url.Action("Index","ACategory")">Danh mục</a>
                 <a class="p-2 text-white" href="@Url.Action("Index","AUser")">Khách hàng</a>
                 <a class="p-2 text-white" href="@Url.Action("Index","AInvoice")">Hóa đơn</a>
                 <a class="p-2 text-white" href="@Url.Action("Index","AProvider")">Nhà cung cấp</a>
-                <a class="p-2 text-white" href="@Url.Action("Index","AOder")">Đặt hàng</a>
+                <a class="p-2 text-white" href="@Url.Action("Index","AOrder")">Đặt hàng</a>
             </nav>
         </div>
     </div>
