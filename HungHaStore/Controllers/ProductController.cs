@@ -60,8 +60,6 @@ namespace HungHaStore.Controllers
         {
             san_pham model = db.san_pham.SqlQuery("select * from san_pham where id =" + id).Single();
             db.Database.ExecuteSqlCommand("UPDATE [dbo].[san_pham] SET [luot_xem] = "+(model.luot_xem + 1)+" WHERE id = "+model.id);
-            List<san_pham> sanPhamLienQuan = db.san_pham.SqlQuery("select top 4 * from san_pham where id_loai_sp = " + model.id_loai_sp).ToList();
-            ViewBag.sanPhamLienQuan = sanPhamLienQuan;
             return View(model);
         }
     }

@@ -57,9 +57,7 @@
                                 <td class="shoping__cart__quantity">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <a class="dec qtybtn">-</a>
                                             <input type="text" value="@item.so_luong" readonly>
-                                            <a class="inc qtybtn">+</a>
                                         </div>
                                     </div>
                                 </td>
@@ -108,51 +106,6 @@
     </div>
 </section>
 <script>
-    $(document).on("click", "div.pro-qty .dec", function () {
-        var url = "@Url.Action("Quantity","Ajax")";
-        var id = $(this).closest("tr").attr("data-id");
-        var soluong = parseInt($(this).closest("div").find("input").val()) - 1;
-        $.ajax({
-            url: url,
-            type: "get",
-            data: {
-                id: id,
-                soluong:soluong
-            },
-            dataType: 'json',
-            success: function (response) {
-                console.log(response);
-                if (response == true) {
-                    location.reload();
-                } else {
-                    alert("Xảy ra lỗi.");
-                }
-            }
-        });
-    })
-
-    $(document).on("click", "div.pro-qty .inc", function () {
-        var url = "@Url.Action("Quantity","Ajax")";
-        var id = $(this).closest("tr").attr("data-id");
-        var soluong = parseInt($(this).closest("div").find("input").val()) + 1;
-        $.ajax({
-            url: url,
-            type: "get",
-            data: {
-                id: id,
-                soluong:soluong
-            },
-            dataType: 'json',
-            success: function (response) {
-                console.log(response);
-                if (response == true) {
-                    location.reload();
-                } else {
-                    alert("Xảy ra lỗi.");
-                }
-            }
-        });
-    })
 
     $(document).on("click", ".shoping__cart__table .icon_close", function () {
         var tr = $(this).closest("tr");

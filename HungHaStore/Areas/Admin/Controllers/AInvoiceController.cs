@@ -17,12 +17,10 @@ namespace HungHaStore.Areas.Admin.Controllers
         private Model1 db = new Model1();
 
         // GET: Admin/AInvoice
-        public ActionResult Index(int pageSize = 20, int page = 1,string search = "",string daterange = "")
+        public ActionResult Index(int pageSize = 20, int page = 1)
         {
             var query = db.hoa_don.OrderByDescending(s => s.id);
             IEnumerable<hoa_don> hoaDons = query.ToPagedList(page, pageSize);
-            ViewBag.search = search;
-            ViewBag.daterange = daterange;
             return View(hoaDons);
         }
 
