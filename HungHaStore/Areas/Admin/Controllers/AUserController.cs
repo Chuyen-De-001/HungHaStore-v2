@@ -43,6 +43,7 @@ namespace HungHaStore.Areas.Admin.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
         // GET: Admin/AUser/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -57,6 +58,8 @@ namespace HungHaStore.Areas.Admin.Controllers
             }
             return View(nguoi_dung);
         }
+=======
+>>>>>>> 21d9df2a12829dbcfbcaa5f213c2c8bcecd33dbd
 
         // POST: Admin/AUser/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
