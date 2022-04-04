@@ -180,6 +180,10 @@
             var id = @Model.id;
             var url = "@Url.Action("Add", "Ajax")";
             var soluong = $("input[name=soluong]").val();
+            if (soluong < 1) {
+                alert("Số lượng sản phẩm đặt hàng ít nhất là 1 sản phẩm");
+                return;
+            }
             $.ajax({
                 url: url,
                 type: "get",
